@@ -1,6 +1,7 @@
 # AnotherApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.7.
+This is a project for testing custom angular controls. 
+As `a matter of fact` this is only a test repository. [Don't pay any attention](http://github.com) to it.
 
 ## Development server
 
