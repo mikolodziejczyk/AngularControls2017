@@ -34,10 +34,20 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
     console.log("ngAfterViewInit called");
   }
 
+
   writeValue(obj: any): void {
     console.log("writeValue called");
-    if (obj && this.input) {
-      this.input.nativeElement.value = obj.toString();
+    if (this.input) {
+      this.input.nativeElement.value = obj ? obj.toString() : "";
+
+      window.setTimeout(() => {
+        let rawValue: string = this.input.nativeElement.value;
+        this.updateInternalState(rawValue, false);
+      }, 0);
+
+    }
+    else {
+      console.log("writeValue - input not ready yet.");
     }
   }
 
@@ -64,32 +74,57 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
   }
 
   onInput() {
-    console.log("propagateChange called");
+    console.log("onInput called");
 
-    let v = this.input.nativeElement.value;
+    // let v = this.input.nativeElement.value;
+    // console.log(`The value is ${v}`);
 
-    if (!v) {
-      if (this.required) {
-        setControlError(this.control, "required", true);
-      }
-      else {
-        this.propagateChange(null);
-      }
-    }
-    else {
-      removeControlError(this.control, "required");
-      let r = this.verifyAndParseNumber(v);
-      if (r != null) {
-        let shouldUpdate: boolean = this.applyMinMax(r);
-        if (shouldUpdate) {
-          this.propagateChange(r);
-        }
-      }
-    }
+    // if (!v) {
+    //   if (this.isRequired) {
+    //     setControlError(this.control, "required", true);
+    //     console.log("Adding required error.");
+    //   }
+    //   this.propagateChange(null);
+    // }
+    // else {
+    //   removeControlError(this.control, "required");
+    //   console.log("Removing required error");
+    //   let r = this.verifyAndParseNumber(v);
+    //   if (r != null) {
+    //     this.applyMinMax(r);
+    //   }
+    //   console.log(`Errors before propagateChange: verifyAndParseNumber`);
+    //   console.log(this.control.errors);
+    //   if (r) this.propagateChange(r); else this.propagateChange(NaN);
+
+    // }
+    // console.log(`Errors after propagateChange: verifyAndParseNumber`);
+    // console.log(this.control.errors);
+
+    let rawValue: string = this.input.nativeElement.value;
+    this.updateInternalState(rawValue, true);
+
+    // let isEmpty = !rawValue;
+    // let isNumber: boolean = true;
+    // let cooked: number;
+    // if (!isEmpty) {
+    //   isNumber = /^\d+$/.test(rawValue);
+    //   cooked = parseInt(rawValue);
+    //   isNumber = isNumber && !isNaN(cooked);
+    //   if (!isNumber) cooked = null;
+    // }
+    // else {
+    //   cooked = null;
+    // }
 
 
+    // this.propagateChange(cooked);
 
+    // if (isEmpty && this.isRequired) setControlError(this.control, "required", true);
+    // if (!isNumber) setControlError(this.control, NumberControlComponent.not_a_number_error, true);
   }
+
+
 
   onBlur() {
     console.log("onTouched called");
@@ -102,12 +137,13 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
     if (isNumber && !isNaN(cooked)) {
       console.log(`Removing not_a_number_error.`);
       removeControlError(this.control, NumberControlComponent.not_a_number_error);
-      this.propagateChange(cooked);
     }
     else {
       cooked = null;
       console.log(`Adding ${NumberControlComponent.not_a_number_error}.`);
       setControlError(this.control, NumberControlComponent.not_a_number_error, true);
+      console.log(`Errors from: verifyAndParseNumber`);
+      console.log(this.control.errors);
     }
 
     return cooked;
@@ -130,7 +166,40 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
   }
 
   @Input() label: string;
-  @Input() required: boolean = false;
+  @Input() isRequired: boolean = false;
   @Input() min: number = undefined;
   @Input() max: number = undefined;
+
+  updateInternalState(rawValue: string | number | null, emitChange: boolean = false) {
+    console.log(`updateInternalState - called with ${rawValue}.`);
+    this.isEmpty = rawValue === null || rawValue === undefined || rawValue == "";
+    this.isNumber = true;
+
+    if (typeof (rawValue) === "string") {
+      if (!this.isEmpty) {
+        this.isNumber = /^\d+$/.test(rawValue);
+        this.value = parseInt(rawValue);
+        this.isNumber = this.isNumber && !isNaN(this.value);
+        if (!this.isNumber) this.value = null;
+      }
+      else {
+        this.value = null;
+      }
+    }
+    else {
+      this.value = rawValue;
+    }
+
+    if (emitChange) {
+      this.propagateChange(this.value);
+    }
+
+    if (this.isEmpty && this.isRequired) setControlError(this.control, "required", true);
+    if (!this.isNumber) setControlError(this.control, NumberControlComponent.not_a_number_error, true);
+  }
+
+
+  isNumber: boolean;
+  isEmpty: boolean;
+  value: number;
 }
