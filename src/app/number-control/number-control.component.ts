@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, ValidationErrors } from '@angular/forms';
 import { removeControlError, setControlError } from '../validationErrorHelpers';
+import { WSAVERNOTSUPPORTED } from 'constants';
 
 @Component({
   selector: 'app-number-control',
@@ -26,6 +27,7 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
   @Input() control: FormControl;
 
   @ViewChild("input") input: ElementRef;
+
 
   ngOnInit() {
   }
@@ -76,52 +78,8 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
   onInput() {
     console.log("onInput called");
 
-    // let v = this.input.nativeElement.value;
-    // console.log(`The value is ${v}`);
-
-    // if (!v) {
-    //   if (this.isRequired) {
-    //     setControlError(this.control, "required", true);
-    //     console.log("Adding required error.");
-    //   }
-    //   this.propagateChange(null);
-    // }
-    // else {
-    //   removeControlError(this.control, "required");
-    //   console.log("Removing required error");
-    //   let r = this.verifyAndParseNumber(v);
-    //   if (r != null) {
-    //     this.applyMinMax(r);
-    //   }
-    //   console.log(`Errors before propagateChange: verifyAndParseNumber`);
-    //   console.log(this.control.errors);
-    //   if (r) this.propagateChange(r); else this.propagateChange(NaN);
-
-    // }
-    // console.log(`Errors after propagateChange: verifyAndParseNumber`);
-    // console.log(this.control.errors);
-
     let rawValue: string = this.input.nativeElement.value;
     this.updateInternalState(rawValue, true);
-
-    // let isEmpty = !rawValue;
-    // let isNumber: boolean = true;
-    // let cooked: number;
-    // if (!isEmpty) {
-    //   isNumber = /^\d+$/.test(rawValue);
-    //   cooked = parseInt(rawValue);
-    //   isNumber = isNumber && !isNaN(cooked);
-    //   if (!isNumber) cooked = null;
-    // }
-    // else {
-    //   cooked = null;
-    // }
-
-
-    // this.propagateChange(cooked);
-
-    // if (isEmpty && this.isRequired) setControlError(this.control, "required", true);
-    // if (!isNumber) setControlError(this.control, NumberControlComponent.not_a_number_error, true);
   }
 
 
@@ -131,44 +89,77 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
     this.onTouched();
   }
 
-  verifyAndParseNumber(v: string): number {
-    let isNumber = /^\d+$/.test(v);
-    let cooked = parseInt(v);
-    if (isNumber && !isNaN(cooked)) {
-      console.log(`Removing not_a_number_error.`);
-      removeControlError(this.control, NumberControlComponent.not_a_number_error);
-    }
-    else {
-      cooked = null;
-      console.log(`Adding ${NumberControlComponent.not_a_number_error}.`);
-      setControlError(this.control, NumberControlComponent.not_a_number_error, true);
-      console.log(`Errors from: verifyAndParseNumber`);
-      console.log(this.control.errors);
-    }
-
-    return cooked;
-  }
-
-  applyMinMax(v: number): boolean {
-    let r: boolean = true;
-
-    if (this.min) {
-      if (v < this.min) {
-        setControlError(this.control, NumberControlComponent.less_than_min_error, true);
-        r = false;
-      }
-      else {
-        removeControlError(this.control, NumberControlComponent.less_than_min_error);
-      }
-    }
-
-    return r;
-  }
 
   @Input() label: string;
-  @Input() isRequired: boolean = false;
-  @Input() min: number = undefined;
-  @Input() max: number = undefined;
+
+  private _isRequired: boolean = false;
+
+  @Input() set isRequired(v: boolean) {
+    if (this._isRequired != v) {
+      this._isRequired = v;
+      this.updateInternalValidators();
+    }
+  }
+  get isRequired(): boolean {
+    return this._isRequired;
+  }
+
+  private _min: number = undefined;
+
+  @Input() set min(v: number) {
+    if (this._min != v) {
+      this._min = v;
+      this.updateInternalValidators();
+    }
+  }
+  get min(): number {
+    return this._min;
+  }
+
+  private _max: number = undefined;
+  @Input() set max(v: number) {
+    if (this._max != v) {
+      this._max = v;
+      this.updateInternalValidators();
+    }
+  }
+  get max(): number {
+    return this._max;
+  }
+
+  updateInternalValidators() {
+    if (this.isEmpty && this.isRequired) {
+      setControlError(this.control, "required", true);
+    }
+    else {
+      removeControlError(this.control, "required");
+    }
+
+    if (!this.isNumber) {
+      setControlError(this.control, NumberControlComponent.not_a_number_error, true);
+    }
+
+
+    if (!this.isEmpty && this.isNumber) {
+
+      if (this.min) {
+        if (this.value < this.min) {
+          setControlError(this.control, NumberControlComponent.less_than_min_error, true)
+        }
+        else {
+          removeControlError(this.control, NumberControlComponent.less_than_min_error);
+        }
+      }
+
+      if (this.max) {
+        if (this.value > this.max) {
+          setControlError(this.control, NumberControlComponent.more_than_max_error, true)
+        } else {
+          removeControlError(this.control, NumberControlComponent.more_than_max_error);
+        }
+      }
+    }
+  }
 
   updateInternalState(rawValue: string | number | null, emitChange: boolean = false) {
     console.log(`updateInternalState - called with ${rawValue}.`);
@@ -194,8 +185,8 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
       this.propagateChange(this.value);
     }
 
-    if (this.isEmpty && this.isRequired) setControlError(this.control, "required", true);
-    if (!this.isNumber) setControlError(this.control, NumberControlComponent.not_a_number_error, true);
+    this.updateInternalValidators();
+
   }
 
 
