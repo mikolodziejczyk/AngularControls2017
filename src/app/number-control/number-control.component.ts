@@ -198,7 +198,7 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
         setControlError(this.control, NumberControlComponent.error_maxDecimalDigits, message);
       }
       else {
-        removeControlError(this.control, NumberControlComponent.error_maxDecimalDigits
+        removeControlError(this.control, NumberControlComponent.error_maxDecimalDigits);
       }
     }
   }
