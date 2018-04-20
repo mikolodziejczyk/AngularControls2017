@@ -10,13 +10,15 @@ import { SampleModule } from 'third-lib';
 import { MyComponentComponent } from './my-component/my-component.component';
 import { AnotherComponentComponent } from './another-component/another-component.component';
 import { NumberControlComponent } from './number-control/number-control.component';
+import { ValidationErrorsComponent } from './validation-errors/validation-errors.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MyComponentComponent,
     AnotherComponentComponent,
-    NumberControlComponent
+    NumberControlComponent,
+    ValidationErrorsComponent
   ],
   imports: [
     BrowserModule,

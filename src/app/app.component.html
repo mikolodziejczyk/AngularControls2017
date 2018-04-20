@@ -13,11 +13,12 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-4">Number component</label>
+            <label class="control-label col-sm-4">{{ numberComponent.label }}</label>
             <div class="col-sm-8">
                 <app-number-control #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Cena jedn." [isRequired]="true"
                     min=-10 max=103320.45 maxDecimalDigits=2></app-number-control>
-                <div *ngIf="secondNumber.invalid && (secondNumber.dirty || secondNumber.touched)">
+                <app-validation-errors [control]="secondNumber" [label]="numberComponent.label"></app-validation-errors>
+                <!-- <div *ngIf="secondNumber.invalid && (secondNumber.dirty || secondNumber.touched)">
                     <div *ngIf="secondNumber.errors.required" class="error-message">
                         A value is required.
                     </div>
@@ -33,7 +34,7 @@
                     <div *ngIf="secondNumber.errors.maxDecimalDigits" class="error-message">
                         {{ secondNumber.errors.maxDecimalDigits }}
                     </div>
-                </div>
+                </div> -->
             </div>
 
 

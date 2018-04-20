@@ -8,7 +8,7 @@ import { roundAwayFromZero } from '../numberHelpers/numberHelpers';
 import { formatNumberPlain } from '../numberHelpers/localeNumberFormat';
 
 // TODO: 
-// try to obtain control from a directive rather than from a binding
+// try to obtain control from a directive rather than from a binding - unclear whether possible
 // consider locale separator
 // two modes - integer and decimal - not modifiable
 
