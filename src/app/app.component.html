@@ -15,19 +15,22 @@
         <div class="form-group">
             <label class="control-label col-sm-4">Number component</label>
             <div class="col-sm-8">
-                <app-number-control #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Number component" [isRequired]="true" min=1></app-number-control>
+                <app-number-control #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Cena jedn." [isRequired]="true" min=1 maxDecimalDigits=2></app-number-control>
                 <div *ngIf="secondNumber.invalid && (secondNumber.dirty || secondNumber.touched)">
                     <div *ngIf="secondNumber.errors.required" class="error-message">
                         A value is required.
                     </div>
                     <div *ngIf="secondNumber.errors.notANumber" class="error-message">
-                        You must specify a number.
+                        {{ secondNumber.errors.notANumber }}
                     </div>
                     <div *ngIf="secondNumber.errors.min" class="error-message">
                         The value is too small.
                     </div>
                     <div *ngIf="secondNumber.errors.max" class="error-message">
                         The value is too large.
+                    </div>
+                    <div *ngIf="secondNumber.errors.maxDecimalDigits" class="error-message">
+                        {{ secondNumber.errors.maxDecimalDigits }}
                     </div>
                 </div>
             </div>

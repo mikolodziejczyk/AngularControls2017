@@ -3,16 +3,19 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, ValidationErrors 
 import { removeControlError, setControlError } from '../validationErrorHelpers';
 import { WSAVERNOTSUPPORTED } from 'constants';
 import { localePaseFloat } from '../numberHelpers/localeNumberParse';
+import { sprintf } from "sprintf-js"
+import { roundAwayFromZero } from '../numberHelpers/numberHelpers';
 
 // TODO: 
 // decimalDigits input property
 // try to obtain control from a directive rather than from a binding
-// improve regex - allow a minus sign
+// v improve regex - allow a minus sign
 // consider locale separator
-// move parsing the number to a separate class
+// v move parsing the number to a separate class
 // errors as strings with spritf
 // two modes - integer and decimal - not modifiable
 // add support for the change event to respond to other change source
+// setting min/max to undefined should clear errors
 
 @Component({
   selector: 'app-number-control',
@@ -27,9 +30,10 @@ import { localePaseFloat } from '../numberHelpers/localeNumberParse';
   ]
 })
 export class NumberControlComponent implements ControlValueAccessor, OnInit, AfterViewInit {
-  static not_a_number_error: string = "notANumber";
-  static less_than_min_error: string = "min";
-  static more_than_max_error: string = "max";
+  static error_NaN: string = "notANumber";
+  static error_min: string = "min";
+  static error_max: string = "max";
+  static error_maxDecimalDigits: string = "maxDecimalDigits";
 
   constructor() { }
 
@@ -137,6 +141,18 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
   }
 
 
+  private _maxDecimalDigits: number | undefined = undefined;
+
+  @Input() set maxDecimalDigits(v: number) {
+    if (this._maxDecimalDigits != v) {
+      this._maxDecimalDigits = v;
+      this.updateInternalValidators();
+    }
+  }
+  get maxDecimalDigits(): number {
+    return this._maxDecimalDigits;
+  }
+
   updateInternalValidators() {
     if (this.isEmpty && this.isRequired) {
       setControlError(this.control, "required", true);
@@ -146,27 +162,42 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
     }
 
     if (!this.isNumber) {
-      setControlError(this.control, NumberControlComponent.not_a_number_error, true);
+      let message = sprintf("Wartość w polu '%s' musi być liczbą.", this.label);
+      setControlError(this.control, NumberControlComponent.error_NaN, message);
     }
 
 
     if (!this.isEmpty && this.isNumber) {
 
-      if (this.min) {
+      if (this.min !== undefined) {
         if (this.value < this.min) {
-          setControlError(this.control, NumberControlComponent.less_than_min_error, true)
+          setControlError(this.control, NumberControlComponent.error_min, true)
         }
         else {
-          removeControlError(this.control, NumberControlComponent.less_than_min_error);
+          removeControlError(this.control, NumberControlComponent.error_min);
         }
       }
 
-      if (this.max) {
+      if (this.max !== undefined) {
         if (this.value > this.max) {
-          setControlError(this.control, NumberControlComponent.more_than_max_error, true)
+          setControlError(this.control, NumberControlComponent.error_max, true)
         } else {
-          removeControlError(this.control, NumberControlComponent.more_than_max_error);
+          removeControlError(this.control, NumberControlComponent.error_max);
         }
+      }
+
+      let maxDecimalDigitsFailed: boolean = false;
+      if (this.maxDecimalDigits !== undefined) {
+        let rounded = roundAwayFromZero(this.value, this.maxDecimalDigits);
+        maxDecimalDigitsFailed = (rounded != this.value)
+      }
+
+      if (maxDecimalDigitsFailed) {
+        let message = sprintf("W '%s' możesz podać do %d miejsc po przecinku.", this.label, this.maxDecimalDigits);
+        setControlError(this.control, NumberControlComponent.error_maxDecimalDigits, message);
+      }
+      else {
+        removeControlError(this.control, NumberControlComponent.error_maxDecimalDigits
       }
     }
   }
@@ -176,7 +207,7 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
     this.isEmpty = rawValue === null || rawValue === undefined || rawValue == "";
     this.isNumber = true;
 
-    if (rawValue && typeof(rawValue)!=="number") rawValue = rawValue.toString();
+    if (rawValue && typeof (rawValue) !== "number") rawValue = rawValue.toString();
 
     if (typeof (rawValue) === "string") {
       if (!this.isEmpty) {
