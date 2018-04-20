@@ -13,9 +13,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-4">{{ numberComponent.label }}</label>
+            <label class="control-label col-sm-4" [for]="numberComponent.id">{{ numberComponent.label }}</label>
             <div class="col-sm-8">
-                <app-number-control #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Cena jedn." [isRequired]="true"
+                <app-number-control [id]="'secondNumber'" #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Cena jedn." [isRequired]="true"
                     min=-10 max=103320.45 maxDecimalDigits=2></app-number-control>
                 <app-validation-errors [control]="secondNumber" [label]="numberComponent.label"></app-validation-errors>
                 <!-- <div *ngIf="secondNumber.invalid && (secondNumber.dirty || secondNumber.touched)">

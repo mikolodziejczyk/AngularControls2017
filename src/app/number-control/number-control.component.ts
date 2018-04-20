@@ -6,12 +6,15 @@ import { localePaseFloat } from '../numberHelpers/localeNumberParse';
 import { sprintf } from "sprintf-js"
 import { roundAwayFromZero } from '../numberHelpers/numberHelpers';
 import { formatNumberPlain } from '../numberHelpers/localeNumberFormat';
+import { element } from 'protractor';
 
 // TODO: 
 // try to obtain control from a directive rather than from a binding - unclear whether possible
 // consider locale separator
 // two modes - integer and decimal - not modifiable
+// error helpers as DI class to allow unit testing
 
+// v id property - take and set id of the input (note how to set)
 // v min / max error messages should return formatted number but with any number of decimal digits
 // v move parsing the number to a separate class
 // v errors as strings with spritf
@@ -109,6 +112,15 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
 
 
   @Input() label: string;
+
+
+  @Input() set id(v: string) {
+    this.input.nativeElement.id = v
+  }
+  get id(): string {
+    return this.input.nativeElement.id;
+  }
+
 
   private _isRequired: boolean = false;
 
