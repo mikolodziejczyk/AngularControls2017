@@ -3,6 +3,15 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, ValidationErrors 
 import { removeControlError, setControlError } from '../validationErrorHelpers';
 import { WSAVERNOTSUPPORTED } from 'constants';
 
+// TODO: 
+// decimalDigits input property
+// try to obtain control from a directive rather than from a binding
+// improve regex - allow a minus sign
+// consider locale separator
+// move parsing the number to a separate class
+// errors as strings with spritf
+// two modes - integer and decimal - not modifiable
+
 @Component({
   selector: 'app-number-control',
   templateUrl: './number-control.component.html',
@@ -14,8 +23,6 @@ import { WSAVERNOTSUPPORTED } from 'constants';
       multi: true
     }
   ]
-
-
 })
 export class NumberControlComponent implements ControlValueAccessor, OnInit, AfterViewInit {
   static not_a_number_error: string = "notANumber";
@@ -166,6 +173,8 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
     this.isEmpty = rawValue === null || rawValue === undefined || rawValue == "";
     this.isNumber = true;
 
+    if (rawValue && typeof(rawValue)!=="number") rawValue = rawValue.toString();
+
     if (typeof (rawValue) === "string") {
       if (!this.isEmpty) {
         this.isNumber = /^\d+$/.test(rawValue);
@@ -190,7 +199,7 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
   }
 
 
-  isNumber: boolean;
-  isEmpty: boolean;
-  value: number;
+  private isNumber: boolean;
+  private isEmpty: boolean;
+  private value: number;
 }
