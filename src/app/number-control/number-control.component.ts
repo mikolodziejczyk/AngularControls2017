@@ -7,16 +7,19 @@ import { sprintf } from "sprintf-js"
 import { roundAwayFromZero } from '../numberHelpers/numberHelpers';
 
 // TODO: 
-// v decimalDigits input property
 // try to obtain control from a directive rather than from a binding
-// v improve regex - allow a minus sign
 // consider locale separator
+// two modes - integer and decimal - not modifiable
+// min / max error messages should return formatted number but with any number of decimal digits
+
 // v move parsing the number to a separate class
 // v errors as strings with spritf
-// two modes - integer and decimal - not modifiable
-// add support for the change event to respond to other change source
-// setting min/max to undefined should clear errors
-// refactor validation into separate methods
+// v improve regex - allow a minus sign
+// v decimalDigits input property
+// v add support for the change event to respond to other change source
+// v setting min/max to undefined should clear errors
+// v refactor validation into separate methods
+
 
 @Component({
   selector: 'app-number-control',
@@ -167,39 +170,63 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
       setControlError(this.control, NumberControlComponent.error_NaN, message);
     }
 
+    this.checkMin();
 
-    if (!this.isEmpty && this.isNumber) {
+    this.checkMax();
 
-      if (this.min !== undefined) {
-        if (this.value < this.min) {
-          setControlError(this.control, NumberControlComponent.error_min, true)
-        }
-        else {
-          removeControlError(this.control, NumberControlComponent.error_min);
-        }
-      }
+    this.checkMaxDecimalDigits();
 
-      if (this.max !== undefined) {
-        if (this.value > this.max) {
-          setControlError(this.control, NumberControlComponent.error_max, true)
-        } else {
-          removeControlError(this.control, NumberControlComponent.error_max);
-        }
-      }
+  }
 
-      let maxDecimalDigitsFailed: boolean = false;
-      if (this.maxDecimalDigits !== undefined) {
-        let rounded = roundAwayFromZero(this.value, this.maxDecimalDigits);
-        maxDecimalDigitsFailed = (rounded != this.value)
-      }
+  private checkMin() {
+    if (this.isEmpty || !this.isNumber) return;
 
-      if (maxDecimalDigitsFailed) {
-        let message = sprintf("W '%s' możesz podać do %d miejsc po przecinku.", this.label, this.maxDecimalDigits);
-        setControlError(this.control, NumberControlComponent.error_maxDecimalDigits, message);
-      }
-      else {
-        removeControlError(this.control, NumberControlComponent.error_maxDecimalDigits);
-      }
+    let failed: boolean = false;
+
+    if (this.min !== undefined) {
+      failed = this.value < this.min
+    }
+    if (failed) {
+      let message = sprintf("Wartość w '%s' musi być większa lub równa %s.", this.label, this.min.toString());
+      setControlError(this.control, NumberControlComponent.error_min, message);
+    }
+    else {
+      removeControlError(this.control, NumberControlComponent.error_min);
+    }
+  }
+
+  private checkMax() {
+    if (this.isEmpty || !this.isNumber) return;
+
+    let failed: boolean = false;
+
+    if (this.max !== undefined) {
+      failed = (this.value > this.max);
+    }
+
+    if (failed) {
+      let message = sprintf("Wartość w '%s' musi być mniejsza lub równa %s.", this.label, this.max.toString());
+      setControlError(this.control, NumberControlComponent.error_max, message);
+    }
+    else {
+      removeControlError(this.control, NumberControlComponent.error_max);
+    }
+  }
+
+  private checkMaxDecimalDigits() {
+    if (this.isEmpty || !this.isNumber) return;
+
+    let maxDecimalDigitsFailed: boolean = false;
+    if (this.maxDecimalDigits !== undefined) {
+      let rounded = roundAwayFromZero(this.value, this.maxDecimalDigits);
+      maxDecimalDigitsFailed = (rounded != this.value);
+    }
+    if (maxDecimalDigitsFailed) {
+      let message = sprintf("W '%s' możesz podać do %d miejsc po przecinku.", this.label, this.maxDecimalDigits);
+      setControlError(this.control, NumberControlComponent.error_maxDecimalDigits, message);
+    }
+    else {
+      removeControlError(this.control, NumberControlComponent.error_maxDecimalDigits);
     }
   }
 
