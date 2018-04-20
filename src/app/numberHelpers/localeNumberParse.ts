@@ -4,7 +4,7 @@ import { NumberFormat } from "./numberFormat";
  * parses a float number allowing localized group separators and decimal point, still being strict about format; returns NaN if the format is invalid
  * @param input 
  */
-export function parseFloat (input : string) : number {
+export function localePaseFloat (input : string) : number {
     var dsep = NumberFormat.decimalSeparator;
     var tsep = NumberFormat.groupSeparator;
 
@@ -26,7 +26,7 @@ export function parseFloat (input : string) : number {
  * Parses an int number allowing localized group separators, still being strict about the format; returns NaN if the format is invalid
  * @param input 
  */
-export function parseInt(input : string) : number {
+export function localeParseInt(input : string) : number {
     var tsep = NumberFormat.groupSeparator;
 
     var res = "^-?((\\d{1,3}(\\" + tsep + "\\d{3})*)|(\\d+))$"
@@ -39,5 +39,5 @@ export function parseInt(input : string) : number {
     }
 
     input = input.replace(new RegExp(tsep, "g"), "")
-    return parseInt(input)
+    return localeParseInt(input)
 }

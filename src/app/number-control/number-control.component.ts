@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, forwardRef, In
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormControl, ValidationErrors } from '@angular/forms';
 import { removeControlError, setControlError } from '../validationErrorHelpers';
 import { WSAVERNOTSUPPORTED } from 'constants';
+import { localePaseFloat } from '../numberHelpers/localeNumberParse';
 
 // TODO: 
 // decimalDigits input property
@@ -11,6 +12,7 @@ import { WSAVERNOTSUPPORTED } from 'constants';
 // move parsing the number to a separate class
 // errors as strings with spritf
 // two modes - integer and decimal - not modifiable
+// add support for the change event to respond to other change source
 
 @Component({
   selector: 'app-number-control',
@@ -51,7 +53,7 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
 
       window.setTimeout(() => {
         let rawValue: string = this.input.nativeElement.value;
-        this.updateInternalState(rawValue, false);
+        this.updateValueAndState(rawValue, false);
       }, 0);
 
     }
@@ -86,7 +88,7 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
     console.log("onInput called");
 
     let rawValue: string = this.input.nativeElement.value;
-    this.updateInternalState(rawValue, true);
+    this.updateValueAndState(rawValue, true);
   }
 
 
@@ -134,6 +136,7 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
     return this._max;
   }
 
+
   updateInternalValidators() {
     if (this.isEmpty && this.isRequired) {
       setControlError(this.control, "required", true);
@@ -168,7 +171,7 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
     }
   }
 
-  updateInternalState(rawValue: string | number | null, emitChange: boolean = false) {
+  updateValueAndState(rawValue: string | number | null, emitChange: boolean = false) {
     console.log(`updateInternalState - called with ${rawValue}.`);
     this.isEmpty = rawValue === null || rawValue === undefined || rawValue == "";
     this.isNumber = true;
@@ -177,9 +180,8 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
 
     if (typeof (rawValue) === "string") {
       if (!this.isEmpty) {
-        this.isNumber = /^\d+$/.test(rawValue);
-        this.value = parseInt(rawValue);
-        this.isNumber = this.isNumber && !isNaN(this.value);
+        this.value = localePaseFloat(rawValue);
+        this.isNumber = !isNaN(this.value);
         if (!this.isNumber) this.value = null;
       }
       else {
