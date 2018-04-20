@@ -5,13 +5,14 @@ import { WSAVERNOTSUPPORTED } from 'constants';
 import { localePaseFloat } from '../numberHelpers/localeNumberParse';
 import { sprintf } from "sprintf-js"
 import { roundAwayFromZero } from '../numberHelpers/numberHelpers';
+import { formatNumberPlain } from '../numberHelpers/localeNumberFormat';
 
 // TODO: 
 // try to obtain control from a directive rather than from a binding
 // consider locale separator
 // two modes - integer and decimal - not modifiable
-// min / max error messages should return formatted number but with any number of decimal digits
 
+// v min / max error messages should return formatted number but with any number of decimal digits
 // v move parsing the number to a separate class
 // v errors as strings with spritf
 // v improve regex - allow a minus sign
@@ -187,7 +188,7 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
       failed = this.value < this.min
     }
     if (failed) {
-      let message = sprintf("Wartość w '%s' musi być większa lub równa %s.", this.label, this.min.toString());
+      let message = sprintf("Wartość w '%s' musi być większa lub równa %s.", this.label, formatNumberPlain(this.min));
       setControlError(this.control, NumberControlComponent.error_min, message);
     }
     else {
@@ -205,7 +206,7 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
     }
 
     if (failed) {
-      let message = sprintf("Wartość w '%s' musi być mniejsza lub równa %s.", this.label, this.max.toString());
+      let message = sprintf("Wartość w '%s' musi być mniejsza lub równa %s.", this.label, formatNumberPlain(this.max));
       setControlError(this.control, NumberControlComponent.error_max, message);
     }
     else {

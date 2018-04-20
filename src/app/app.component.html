@@ -16,7 +16,7 @@
             <label class="control-label col-sm-4">Number component</label>
             <div class="col-sm-8">
                 <app-number-control #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Cena jedn." [isRequired]="true"
-                    min=-10 max=100 maxDecimalDigits=2></app-number-control>
+                    min=-10 max=103320.45 maxDecimalDigits=2></app-number-control>
                 <div *ngIf="secondNumber.invalid && (secondNumber.dirty || secondNumber.touched)">
                     <div *ngIf="secondNumber.errors.required" class="error-message">
                         A value is required.

@@ -27,3 +27,13 @@ export function formatNumber(number: number, decimalDigits?: number, useGroups?:
 export function formatNumberForDisplay(number: number, decimalDigits?: number) {
     return formatNumber(number, decimalDigits, NumberFormat.displayGroupSeparator);
 }
+
+/**
+ * 
+ * @param number Formats a number with a localized decimal separator but without groups.
+ */
+export function formatNumberPlain(number: number) : string {
+    let dsep = NumberFormat.decimalSeparator;
+    let s = number.toString().replace(".",dsep);
+    return s;
+}
