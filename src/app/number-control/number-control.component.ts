@@ -7,15 +7,16 @@ import { sprintf } from "sprintf-js"
 import { roundAwayFromZero } from '../numberHelpers/numberHelpers';
 
 // TODO: 
-// decimalDigits input property
+// v decimalDigits input property
 // try to obtain control from a directive rather than from a binding
 // v improve regex - allow a minus sign
 // consider locale separator
 // v move parsing the number to a separate class
-// errors as strings with spritf
+// v errors as strings with spritf
 // two modes - integer and decimal - not modifiable
 // add support for the change event to respond to other change source
 // setting min/max to undefined should clear errors
+// refactor validation into separate methods
 
 @Component({
   selector: 'app-number-control',
