@@ -20,7 +20,7 @@
             <div class="col-sm-8">
                 <mko-number-control [id]="'secondNumber'" #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Cena jedn." [isRequired]="true"
                     min=-10 max=103320.45 maxDecimalDigits=2></mko-number-control>
-                <app-validation-errors [control]="secondNumber" [label]="numberComponent.label"></app-validation-errors>
+                <mko-validation-errors [control]="secondNumber" [label]="numberComponent.label"></mko-validation-errors>
                  <div *ngIf="secondNumber.invalid && (secondNumber.dirty || secondNumber.touched)">
                     <div *ngIf="secondNumber.errors.required" class="error-message">
                         A value is required.

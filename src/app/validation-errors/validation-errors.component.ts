@@ -5,7 +5,7 @@ import { ValidationErrorMessages } from '../validationErrorMessages';
 
 
 @Component({
-  selector: 'app-validation-errors',
+  selector: 'mko-validation-errors',
   templateUrl: './validation-errors.component.html',
   styleUrls: ['./validation-errors.component.less']
 })
