@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { GeneralControl } from '../generalControl';
 
 @Component({
-  selector: 'app-form-row',
+  selector: 'mko-form-row',
   templateUrl: './form-row.component.html',
   styleUrls: ['./form-row.component.less']
 })

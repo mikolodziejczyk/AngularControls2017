@@ -27,7 +27,7 @@ import { GeneralControl } from '../generalControl';
 
 
 @Component({
-  selector: 'app-number-control',
+  selector: 'mko-number-control',
   templateUrl: './number-control.component.html',
   styleUrls: ['./number-control.component.css'],
   providers: [

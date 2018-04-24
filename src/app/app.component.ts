@@ -54,8 +54,9 @@ export class AppComponent implements OnDestroy {
   setValue = () => {
     // this.numberControlComponent.min++;
     // console.log(`Increased min to: ${this.numberControlComponent.min}`);
-    this.numberControlComponent.isRequired = !this.numberControlComponent.isRequired;
-    console.log(`isRequired: ${this.numberControlComponent.isRequired}`);
+    // this.numberControlComponent.isRequired = !this.numberControlComponent.isRequired;
+    // console.log(`isRequired: ${this.numberControlComponent.isRequired}`);
+    this.myForm.get('from').setErrors({insufficient: "The value is insufficient."});
   }
 
   /**
