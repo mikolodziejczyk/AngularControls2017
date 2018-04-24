@@ -20,14 +20,17 @@ export class AppComponent implements OnDestroy {
   myForm: FormGroup;
   formSubscription: Subscription;
   secondNumber: FormControl;
+  from: FormControl;
 
   createForm() {
     this.myForm = this.fb.group({
       firstNumber: [""],
-      secondNumber: [null]
+      secondNumber: [null],
+      from: [null]
     });
 
     this.secondNumber = <FormControl>this.myForm.controls["secondNumber"];
+    this.from = <FormControl>this.myForm.controls["from"];
   }
 
 

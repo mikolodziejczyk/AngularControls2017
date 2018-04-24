@@ -12,14 +12,16 @@
                 <input type="text" class="form-control" name="firstNumber" formControlName="firstNumber" />
             </div>
         </div>
+
+        <app-form-row [generalControl]="numberComponent">
+            <app-number-control [id]="'secondNumber'" #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Cena jedn."
+                [isRequired]="true" min=-10 max=103320.45 maxDecimalDigits=2 help="Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>"></app-number-control>
+        </app-form-row>
+        <app-form-row [generalControl]="fromComponent">
+            <app-number-control [id]="'from'" #fromComponent formControlName="from" [control]="from" label="Wartość od"
+                [isRequired]="true" min=0 max=99999 maxDecimalDigits=2 help="Dolny zakres jakiejś wartości"></app-number-control>
+        </app-form-row>
         <div class="form-group">
-                <app-form-row [generalControl]="numberComponent">
-                        <app-number-control [id]="'secondNumber'" #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Cena jedn." [isRequired]="true"
-                        min=-10 max=103320.45 maxDecimalDigits=2
-                        help="Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>"
-                        ></app-number-control>
-                    </app-form-row>
-            
             <!-- <label class="control-label col-sm-4" [for]="numberComponent.id">{{ numberComponent.label }}</label>
             <div class="col-sm-8">
                 <app-number-control [id]="'secondNumber'" #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Cena jedn." [isRequired]="true"
