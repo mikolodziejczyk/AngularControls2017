@@ -2,7 +2,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ValidationErrorMessages } from '../validationErrorMessages';
-
+import { sprintf } from "sprintf-js"
+import { format } from 'url';
 
 @Component({
   selector: 'mko-validation-errors',
@@ -62,7 +63,8 @@ export class ValidationErrorsComponent implements OnInit {
           let error = this.control.errors[key];
           if (typeof (error) === "string") {
             // the error value is a string directly so that we can add it to the messages
-            r.push(error);
+            let formattedError = sprintf(error, this.label);
+            r.push(formattedError);
           }
           else {
             console.log(`No error message for ${key}`);
