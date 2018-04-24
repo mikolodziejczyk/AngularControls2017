@@ -40,6 +40,10 @@ export class ValidationErrorsComponent implements OnInit {
    */
   @Input() messageCssClass: string = "error-message";
 
+  /**
+   * The id of the corresponding control, allows moving focus to the control.
+   */
+  @Input() id : string;
 
   /**
    * Returns an array of error messages (strings) for the current control.errors

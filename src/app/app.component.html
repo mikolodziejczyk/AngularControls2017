@@ -6,12 +6,6 @@
 
 <div class="container-fluid">
     <form class="form-horizontal" [formGroup]="myForm" novalidate (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label class="control-label col-sm-4">Number control</label>
-            <div class="col-sm-8">
-                <input type="text" class="form-control" name="firstNumber" formControlName="firstNumber" />
-            </div>
-        </div>
 
         <app-form-row [generalControl]="numberComponent">
             <app-number-control [id]="'secondNumber'" #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Cena jedn."
@@ -19,7 +13,7 @@
         </app-form-row>
         <app-form-row [generalControl]="fromComponent">
             <app-number-control [id]="'from'" #fromComponent formControlName="from" [control]="from" label="Wartość od"
-                [isRequired]="true" min=0 max=99999 maxDecimalDigits=2 help="Dolny zakres jakiejś wartości"></app-number-control>
+                [isRequired]="true" min=0 max=99999 maxDecimalDigits=2 ></app-number-control>
         </app-form-row>
         <div class="form-group">
             <!-- <label class="control-label col-sm-4" [for]="numberComponent.id">{{ numberComponent.label }}</label>
