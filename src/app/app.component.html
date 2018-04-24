@@ -13,10 +13,11 @@
             </div>
         </div>
         <div class="form-group">
-                <app-form-row [control]="numberComponent.control" [label]="numberComponent.label" [id]="numberComponent.id" help="Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a</small>">
+                <app-form-row [generalControl]="numberComponent">
                         <app-number-control [id]="'secondNumber'" #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Cena jedn." [isRequired]="true"
-                        min=-10 max=103320.45 maxDecimalDigits=2></app-number-control>
-                    
+                        min=-10 max=103320.45 maxDecimalDigits=2
+                        help="Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>"
+                        ></app-number-control>
                     </app-form-row>
             
             <!-- <label class="control-label col-sm-4" [for]="numberComponent.id">{{ numberComponent.label }}</label>

@@ -7,6 +7,7 @@ import { sprintf } from "sprintf-js"
 import { roundAwayFromZero } from '../numberHelpers/numberHelpers';
 import { formatNumberPlain } from '../numberHelpers/localeNumberFormat';
 import { element } from 'protractor';
+import { GeneralControl } from '../generalControl';
 
 // TODO: 
 // try to obtain control from a directive rather than from a binding - unclear whether possible
@@ -37,7 +38,7 @@ import { element } from 'protractor';
     }
   ]
 })
-export class NumberControlComponent implements ControlValueAccessor, OnInit, AfterViewInit {
+export class NumberControlComponent implements ControlValueAccessor, GeneralControl, OnInit, AfterViewInit {
   static error_NaN: string = "notANumber";
   static error_min: string = "min";
   static error_max: string = "max";
@@ -169,6 +170,8 @@ export class NumberControlComponent implements ControlValueAccessor, OnInit, Aft
   get maxDecimalDigits(): number {
     return this._maxDecimalDigits;
   }
+
+  @Input() help;
 
   updateInternalValidators() {
     if (this.isEmpty && this.isRequired) {
