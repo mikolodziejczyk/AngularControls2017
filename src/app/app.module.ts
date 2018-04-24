@@ -11,6 +11,7 @@ import { MyComponentComponent } from './my-component/my-component.component';
 import { AnotherComponentComponent } from './another-component/another-component.component';
 import { NumberControlComponent } from './number-control/number-control.component';
 import { ValidationErrorsComponent } from './validation-errors/validation-errors.component';
+import { FormRowComponent } from './form-row/form-row.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ValidationErrorsComponent } from './validation-errors/validation-errors
     MyComponentComponent,
     AnotherComponentComponent,
     NumberControlComponent,
-    ValidationErrorsComponent
+    ValidationErrorsComponent,
+    FormRowComponent
   ],
   imports: [
     BrowserModule,
