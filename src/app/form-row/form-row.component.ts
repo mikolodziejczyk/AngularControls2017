@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-form-row',
@@ -33,4 +34,5 @@ export class FormRowComponent implements OnInit, AfterViewInit {
   @Input() label: string;
   @Input() id: string;
   @Input() help: string;
+  @Input() control: FormControl;
 }
