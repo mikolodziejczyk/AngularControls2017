@@ -57,6 +57,7 @@ export class AppComponent implements OnDestroy {
     // this.numberControlComponent.isRequired = !this.numberControlComponent.isRequired;
     // console.log(`isRequired: ${this.numberControlComponent.isRequired}`);
     this.myForm.get('from').setErrors({insufficient: "Wartość w polu '%s' jest niewystarczająca."});
+    this.myForm.setErrors({insufficient: "Wartość jest niewystarczająca."});
   }
 
   /**

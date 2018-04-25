@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import { ValidationErrorMessages } from '../validationErrorMessages';
 import { sprintf } from "sprintf-js"
 import { format } from 'url';
+import { FormattableError } from '../formattableError';
 
 @Component({
   selector: 'mko-validation-errors',
@@ -44,7 +45,7 @@ export class ValidationErrorsComponent implements OnInit {
   /**
    * The id of the corresponding control, allows moving focus to the control.
    */
-  @Input() id : string;
+  @Input() id: string;
 
   /**
    * Returns an array of error messages (strings) for the current control.errors
@@ -64,6 +65,14 @@ export class ValidationErrorsComponent implements OnInit {
           if (typeof (error) === "string") {
             // the error value is a string directly so that we can add it to the messages
             let formattedError = sprintf(error, this.label);
+            r.push(formattedError);
+          }
+          else if (typeof (error) === "function") {
+            let formattedError = error(this.label);
+            r.push(formattedError);
+          }
+          else if (typeof (error) === "object" && error.formatErrorMessage) {
+            let formattedError = (<FormattableError>error).formatErrorMessage(error, this.label);
             r.push(formattedError);
           }
           else {
