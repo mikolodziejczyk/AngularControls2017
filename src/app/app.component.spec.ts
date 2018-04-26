@@ -8,6 +8,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { SampleModule } from 'third-lib';
+import { ErrorMessageFormatter } from './errorMessages/errorMessageFormatter';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -19,7 +20,8 @@ describe('AppComponent', () => {
         ValidationErrorsComponent,
         FormRowComponent
       ],
-      imports: [ ReactiveFormsModule ]
+      imports: [ ReactiveFormsModule ],
+      providers: [ ErrorMessageFormatter ]
     }).compileComponents();
   }));
   it('should create the app', async(() => {
