@@ -1,10 +1,10 @@
 
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ValidationErrorMessages } from '../validationErrorMessages';
+import { ValidationErrorMessages } from '../errorMessages/validationErrorMessages';
 import { sprintf } from "sprintf-js"
 import { format } from 'url';
-import { FormattableError } from '../formattableError';
+import { FormattableError } from '../errorMessages/formattableError';
 
 @Component({
   selector: 'mko-validation-errors',

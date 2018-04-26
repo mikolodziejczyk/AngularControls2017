@@ -6,7 +6,9 @@
     "module": "commonjs",
     "types": [
       "jasmine",
-      "node"
+      "node",
+      "jQuery",
+      "bootstrap"
     ]
   },
   "files": [

@@ -1,6 +1,10 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { GeneralControl } from '../generalControl';
+// import  "@types/jquery"
+// import  "@types/bootstrap"
+// /// <reference types="jquery"/>
+// /// <reference types="bootstrap"/>
 
 @Component({
   selector: 'mko-form-row',
@@ -22,7 +26,7 @@ export class FormRowComponent implements OnInit, AfterViewInit {
     if (this.help) {
       let helpHtml: string = this.help.replace(/(\r)?\n/g, "<br/>");
 
-      $(this.helpIcon.nativeElement).popover({
+      jQuery(this.helpIcon.nativeElement).popover({
         content: helpHtml,
         title: this.label,
         html: true,

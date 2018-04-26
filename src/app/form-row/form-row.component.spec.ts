@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FormRowComponent } from './form-row.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ValidationErrorsComponent } from '../validation-errors/validation-errors.component';
 
 describe('FormRowComponent', () => {
   let component: FormRowComponent;
@@ -8,7 +10,8 @@ describe('FormRowComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FormRowComponent ]
+      declarations: [ FormRowComponent, ValidationErrorsComponent ],
+      imports: [ ReactiveFormsModule ]
     })
     .compileComponents();
   }));
@@ -19,7 +22,5 @@ describe('FormRowComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+
 });
