@@ -12,6 +12,7 @@ import { AnotherComponentComponent } from './another-component/another-component
 import { NumberControlComponent } from './number-control/number-control.component';
 import { ValidationErrorsComponent } from './validation-errors/validation-errors.component';
 import { FormRowComponent } from './form-row/form-row.component';
+import { ErrorMessageFormatter } from './errorMessages/errorMessageFormatter';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { FormRowComponent } from './form-row/form-row.component';
 
   ],
   entryComponents: [AnotherComponentComponent],
-  providers: [],
+  providers: [ ErrorMessageFormatter ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -5,6 +5,7 @@ import { ValidationErrorMessages } from '../errorMessages/validationErrorMessage
 import { sprintf } from "sprintf-js"
 import { format } from 'url';
 import { FormattableError } from '../errorMessages/formattableError';
+import { ErrorMessageFormatter } from '../errorMessages/errorMessageFormatter';
 
 @Component({
   selector: 'mko-validation-errors',
@@ -16,7 +17,7 @@ import { FormattableError } from '../errorMessages/formattableError';
  */
 export class ValidationErrorsComponent implements OnInit {
 
-  constructor() {
+  constructor(private errorMessageFormatter: ErrorMessageFormatter) {
 
   }
 
@@ -54,34 +55,10 @@ export class ValidationErrorsComponent implements OnInit {
     let r = [];
 
     if (this.control && this.control.errors) {
-      for (let key of Object.keys(this.control.errors)) {
-        let msgFunc = ValidationErrorMessages.get(key);
-        if (msgFunc != null) {
-          let msg = msgFunc(this.label, this.control.errors[key]);
-          r.push(msg);
-        }
-        else {
-          let error = this.control.errors[key];
-          if (typeof (error) === "string") {
-            // the error value is a string directly so that we can add it to the messages
-            let formattedError = sprintf(error, this.label);
-            r.push(formattedError);
-          }
-          else if (typeof (error) === "function") {
-            let formattedError = error(this.label);
-            r.push(formattedError);
-          }
-          else if (typeof (error) === "object" && error.formatErrorMessage) {
-            let formattedError = (<FormattableError>error).formatErrorMessage(error, this.label);
-            r.push(formattedError);
-          }
-          else {
-            console.log(`No error message for ${key}`);
-          }
-        }
-      }
+      r = Object.entries(this.control.errors)
+            .map((pair) => 
+                this.errorMessageFormatter.formatErrorMessage(pair[0], pair[1], this.label))
     }
-
 
     return r;
   }
