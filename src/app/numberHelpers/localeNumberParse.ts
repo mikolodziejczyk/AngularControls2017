@@ -39,5 +39,5 @@ export function localeParseInt(input : string) : number {
     }
 
     input = input.replace(new RegExp(tsep, "g"), "")
-    return localeParseInt(input)
+    return parseInt(input)
 }

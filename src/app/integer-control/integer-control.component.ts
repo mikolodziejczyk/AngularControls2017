@@ -1,9 +1,9 @@
 import { Component, OnInit, forwardRef, Input, ViewChild, ElementRef, ContentChild, OnDestroy } from '@angular/core';
 import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
 import { setControlError, removeControlError } from '../validationErrorHelpers';
-import { roundAwayFromZero } from '../numberHelpers/numberHelpers';
-import { localePaseFloat } from '../numberHelpers/localeNumberParse';
+import {  localeParseInt } from '../numberHelpers/localeNumberParse';
 import { formatNumberPlain } from '../numberHelpers/localeNumberFormat';
+import { GeneralControl } from '../generalControl';
 
 @Component({
   selector: 'mko-integer-control',
@@ -17,18 +17,15 @@ import { formatNumberPlain } from '../numberHelpers/localeNumberFormat';
     }
   ]
 })
-export class IntegerControlComponent implements OnInit, OnDestroy {
+export class IntegerControlComponent implements OnInit, OnDestroy, GeneralControl {
 
   static error_NaN: string = "notANumber";
   static error_min: string = "min";
   static error_max: string = "max";
-  static error_maxDecimalDigits: string = "maxDecimalDigits";
-
+ 
   constructor(private host: ElementRef) { }
 
   @Input() control: FormControl;
-
-  @ViewChild("wrapper") wrapper: ElementRef;
 
   _input: HTMLInputElement;
 
@@ -44,6 +41,7 @@ export class IntegerControlComponent implements OnInit, OnDestroy {
         this._input = (<HTMLSpanElement>this.host.nativeElement).querySelector("input");
       }
 
+      // wire handlers here once the element is obtained
       this._input.addEventListener("change", this.onInput);
       this._input.addEventListener("input", this.onInput);
       this._input.addEventListener("blur", this.onBlur);
@@ -156,20 +154,7 @@ export class IntegerControlComponent implements OnInit, OnDestroy {
     return this._max;
   }
 
-
-  private _maxDecimalDigits: number | undefined = undefined;
-
-  @Input() set maxDecimalDigits(v: number) {
-    if (this._maxDecimalDigits != v) {
-      this._maxDecimalDigits = v;
-      this.updateInternalValidators();
-    }
-  }
-  get maxDecimalDigits(): number {
-    return this._maxDecimalDigits;
-  }
-
-  @Input() help;
+  @Input() help: string;
 
   updateInternalValidators() {
     if (this.isEmpty && this.isRequired) {
@@ -187,8 +172,6 @@ export class IntegerControlComponent implements OnInit, OnDestroy {
     this.checkMin();
 
     this.checkMax();
-
-    this.checkMaxDecimalDigits();
 
   }
 
@@ -227,23 +210,6 @@ export class IntegerControlComponent implements OnInit, OnDestroy {
     }
   }
 
-  private checkMaxDecimalDigits() {
-    if (this.isEmpty || !this.isNumber) return;
-
-    let maxDecimalDigitsFailed: boolean = false;
-    if (this.maxDecimalDigits !== undefined) {
-      let rounded = roundAwayFromZero(this.value, this.maxDecimalDigits);
-      maxDecimalDigitsFailed = (rounded != this.value);
-    }
-    if (maxDecimalDigitsFailed) {
-      let message = sprintf("W '%s' możesz podać do %d miejsc po przecinku.", this.label, this.maxDecimalDigits);
-      setControlError(this.control, IntegerControlComponent.error_maxDecimalDigits, message);
-    }
-    else {
-      removeControlError(this.control, IntegerControlComponent.error_maxDecimalDigits);
-    }
-  }
-
   updateValueAndState(rawValue: string | number | null, emitChange: boolean = false) {
     console.log(`updateInternalState - called with ${rawValue}.`);
     this.isEmpty = rawValue === null || rawValue === undefined || rawValue == "";
@@ -253,7 +219,7 @@ export class IntegerControlComponent implements OnInit, OnDestroy {
 
     if (typeof (rawValue) === "string") {
       if (!this.isEmpty) {
-        this.value = localePaseFloat(rawValue);
+        this.value = localeParseInt(rawValue);
         this.isNumber = !isNaN(this.value);
         if (!this.isNumber) this.value = null;
       }
