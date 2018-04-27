@@ -21,16 +21,22 @@ export class AppComponent implements OnDestroy {
   formSubscription: Subscription;
   secondNumber: FormControl;
   from: FormControl;
+  to: FormControl;
+  year: FormControl;
 
   createForm() {
     this.myForm = this.fb.group({
       firstNumber: [""],
       secondNumber: [null],
-      from: [null]
+      from: [null],
+      to: [2030],
+      year: [2015]
     });
 
     this.secondNumber = <FormControl>this.myForm.controls["secondNumber"];
     this.from = <FormControl>this.myForm.controls["from"];
+    this.to = <FormControl>this.myForm.controls["to"];
+    this.year = <FormControl>this.myForm.controls["year"];
   }
 
 
@@ -56,8 +62,12 @@ export class AppComponent implements OnDestroy {
     // console.log(`Increased min to: ${this.numberControlComponent.min}`);
     // this.numberControlComponent.isRequired = !this.numberControlComponent.isRequired;
     // console.log(`isRequired: ${this.numberControlComponent.isRequired}`);
-    this.myForm.get('from').setErrors({insufficient: "Wartość w polu '%s' jest niewystarczająca."});
-    this.myForm.setErrors({insufficient: "Wartość jest niewystarczająca."});
+    this.myForm.get('from').setErrors({ insufficient: "Wartość w polu '%s' jest niewystarczająca." });
+    this.myForm.setErrors({
+      insufficient: "Wartość jest niewystarczająca.", unique_xxx: "Podane wartości są bez sensu!."
+    });
+    
+    this.markFormGroupTouched(this.myForm);
   }
 
   /**

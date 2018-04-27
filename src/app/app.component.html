@@ -12,8 +12,20 @@
                 [isRequired]="true" min=-10 max=103320.45 maxDecimalDigits=2 help="Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>"></mko-number-control>
         </mko-form-row>
         <mko-form-row [generalControl]="fromComponent">
-            <mko-number-control [id]="'from'" #fromComponent formControlName="from" [control]="from" label="Wartość od"
-                [isRequired]="true" min=0 max=99999 maxDecimalDigits=2 ></mko-number-control>
+            <mko-number-control [id]="'from'" #fromComponent formControlName="from" [control]="from" label="Wartość od" [isRequired]="true"
+                min=0 max=99999 maxDecimalDigits=2></mko-number-control>
+        </mko-form-row>
+        <mko-form-row [generalControl]="toComponent">
+            <mko-integer-control [id]="'to'" #toComponent formControlName="to" [control]="to" label="Wartość do" [isRequired]="true"
+                min=-10 max=103320.45 maxDecimalDigits=2 help="Maksymalna wartość w zakresie, lorem ipsum.">
+                <!-- <input type="text" class="form-control" placeholder="xxx" size="20" /> -->
+            </mko-integer-control>
+        </mko-form-row>
+        <mko-form-row [generalControl]="yearComponent">
+            <mko-integer-control [id]="'year'" #yearComponent formControlName="year" [control]="year" label="Rok" [isRequired]="true"
+                min=1900 max=2100 maxDecimalDigits=2 help="Podaj tutaj rok, lorem ipsum.">
+                <input type="text" class="form-control" placeholder="From a specified template" />
+            </mko-integer-control>
         </mko-form-row>
         <div class="form-group">
             <!-- <label class="control-label col-sm-4" [for]="numberComponent.id">{{ numberComponent.label }}</label>
@@ -44,10 +56,13 @@
         </div>
 
         <div class="form-group">
-                <mko-validation-errors [control]="myForm">
+            <div class="col-sm-8 col-sm-offset-4">
+                <div class="alert alert-danger" *ngIf="myForm.errors">
+                    <mko-validation-errors [control]="myForm">
+                    </mko-validation-errors>
 
-                </mko-validation-errors>
-
+                </div>
+            </div>
         </div>
 
         <div class="row">

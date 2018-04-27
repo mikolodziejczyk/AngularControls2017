@@ -13,6 +13,7 @@ import { NumberControlComponent } from './number-control/number-control.componen
 import { ValidationErrorsComponent } from './validation-errors/validation-errors.component';
 import { FormRowComponent } from './form-row/form-row.component';
 import { ErrorMessageFormatter } from './errorMessages/errorMessageFormatter';
+import { IntegerControlComponent } from './integer-control/integer-control.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ErrorMessageFormatter } from './errorMessages/errorMessageFormatter';
     AnotherComponentComponent,
     NumberControlComponent,
     ValidationErrorsComponent,
-    FormRowComponent
+    FormRowComponent,
+    IntegerControlComponent
   ],
   imports: [
     BrowserModule,
