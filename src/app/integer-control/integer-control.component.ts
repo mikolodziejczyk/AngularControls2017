@@ -24,7 +24,7 @@ export class IntegerControlComponent implements OnInit, OnDestroy {
   static error_max: string = "max";
   static error_maxDecimalDigits: string = "maxDecimalDigits";
 
-  constructor() { }
+  constructor(private host: ElementRef) { }
 
   @Input() control: FormControl;
 
@@ -37,11 +37,11 @@ export class IntegerControlComponent implements OnInit, OnDestroy {
    */
   get input(): HTMLInputElement {
     if (!this._input) {
-      this._input = (<HTMLSpanElement>this.wrapper.nativeElement).querySelector("input");
+      this._input = (<HTMLSpanElement>this.host.nativeElement).querySelector("input");
 
       if (!this._input) {
-        (<HTMLSpanElement>this.wrapper.nativeElement).innerHTML = '<input type="text" class="form-control"/>';
-        this._input = (<HTMLSpanElement>this.wrapper.nativeElement).querySelector("input");
+        (<HTMLSpanElement>this.host.nativeElement).innerHTML = '<input type="text" class="form-control"/>';
+        this._input = (<HTMLSpanElement>this.host.nativeElement).querySelector("input");
       }
 
       this._input.addEventListener("change", this.onInput);
