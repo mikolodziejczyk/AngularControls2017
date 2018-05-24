@@ -3,7 +3,7 @@ import { FormControl, ControlValueAccessor } from "@angular/forms";
 import { setControlError, removeControlError } from "../validationErrorHelpers";
 import { GeneralControl } from "../generalControl";
 
-export class ControlBase implements OnDestroy, ControlValueAccessor, GeneralControl {
+export class TextInputControlBase implements OnDestroy, ControlValueAccessor, GeneralControl {
     constructor(protected host: ElementRef) { }
 
     /**

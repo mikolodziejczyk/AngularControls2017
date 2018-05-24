@@ -1,10 +1,10 @@
-# ControlBase
+# TextInputControlBase
 
 The base for primitive type controls, like number, integer, string.
 
 Allows specifying own input template, but if not specified, generates one automatically.
 
-## Deriving from ControlBase
+## Deriving from TextInputControlBase
 
 ### ngOnDestroy()
 Call the base implementation.

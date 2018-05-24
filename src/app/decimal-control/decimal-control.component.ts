@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ElementRef, forwardRef, Input } from '@angular/core';
-import { ControlBase } from '../controlBase/controlBase';
+import { TextInputControlBase } from '../controlBase/textInputControlBase';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { setControlError, removeControlError } from '../validationErrorHelpers';
 import { localeParseInt, localePaseFloat } from '../numberHelpers/localeNumberParse';
@@ -18,7 +18,7 @@ import { roundAwayFromZero } from '../numberHelpers/numberHelpers';
     }
   ]
 })
-export class DecimalControlComponent extends ControlBase implements OnInit, OnDestroy {
+export class DecimalControlComponent extends TextInputControlBase implements OnInit, OnDestroy {
   static error_NaN: string = "notANumber";
   static error_min: string = "min";
   static error_max: string = "max";
