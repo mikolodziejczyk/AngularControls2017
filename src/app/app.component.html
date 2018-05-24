@@ -9,7 +9,7 @@
 
         <mko-form-row [generalControl]="numberComponent">
             <mko-decimal-control [id]="'secondNumber'" #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Cena jedn."
-                [isRequired]="true" min=-10 max=103320.45 maxDecimalDigits=2 help="Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>">
+                [isRequired]="true" min=-10 max=103320.45 maxDecimalDigits=2 controlSize="medium" help="Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>">
             </mko-decimal-control>
         </mko-form-row>
         <mko-form-row [generalControl]="fromComponent">
@@ -37,7 +37,7 @@
         </mko-form-row>
         <mko-form-row [generalControl]="firstNameomponent">
             <mko-string-control [id]="'firstname'" #firstNameomponent formControlName="firstName" [control]="firstName" label="Imię" [isRequired]="true"
-               minLength=3 help="Podaj tutaj miesiąc, lorem ipsum." maxLength=20>
+               minLength=3 help="Podaj tutaj miesiąc, lorem ipsum." maxLength=20 controlSize="medium">
                 <!-- <input type="text" class="form-control" placeholder="From a specified template" /> -->
             </mko-string-control >
         </mko-form-row>

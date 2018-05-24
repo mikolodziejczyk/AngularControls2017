@@ -4,6 +4,17 @@ div.error-message {
     font-weight: bold;
 }
 
-mko-decimal-control input[type=text] {
+.-mko-control-size-small
+{
     width: 10em;
+}
+
+.-mko-control-size-medium
+{
+    width: 30em;
+}
+
+.-mko-control-size-large
+{
+    width: 100%;
 }

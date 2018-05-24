@@ -28,6 +28,7 @@ export class IntegerControlComponent extends TextInputControlBase implements OnI
 
   ngOnInit() {
     if (!this.maxLength || this.maxLength===-1) this.maxLength = 12;
+    if (!this.controlSize) this.controlSize = "small";
   }
 
 

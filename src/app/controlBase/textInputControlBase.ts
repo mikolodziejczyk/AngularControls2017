@@ -6,6 +6,9 @@ import { GeneralControl } from "../generalControl";
 export class TextInputControlBase implements OnDestroy, ControlValueAccessor, GeneralControl {
     constructor(protected host: ElementRef) { }
 
+    static readonly controlSizeSmall = "-mko-control-size-small";
+    static readonly controlSizeMedium = "-mko-control-size-medium";
+    static readonly controlSizeLarge = "-mko-control-size-large";
 
     /**
      * The actual input element.
@@ -204,7 +207,49 @@ export class TextInputControlBase implements OnDestroy, ControlValueAccessor, Ge
         return this.input.maxLength;
     }
 
+    _controlSize: "small" | "medium" | "large" | null;
+
+    @Input() set controlSize(v: "small" | "medium" | "large" | null) {
+        this._controlSize = v;
+        this.applyControlSize(this._controlSize);
+        
+    }
+
+    get controlSize(): "small" | "medium" | "large" {
+        return this._controlSize;
+    }
+
+
+    protected applyControlSize(size: "small" | "medium" | "large" | null) {
+        if (size == "small") {
+            if (!this.input.classList.contains(TextInputControlBase.controlSizeSmall)) {
+                this.input.classList.add(TextInputControlBase.controlSizeSmall);
+            }
+            this.input.classList.remove(TextInputControlBase.controlSizeMedium);
+            this.input.classList.remove(TextInputControlBase.controlSizeLarge);
+        } else if (size == "medium") {
+            if (!this.input.classList.contains(TextInputControlBase.controlSizeMedium)) {
+                this.input.classList.add(TextInputControlBase.controlSizeMedium);
+            }
+            this.input.classList.remove(TextInputControlBase.controlSizeSmall);
+            this.input.classList.remove(TextInputControlBase.controlSizeLarge);
+        } else if (size == "large") {
+            if (!this.input.classList.contains(TextInputControlBase.controlSizeLarge)) {
+                this.input.classList.add(TextInputControlBase.controlSizeLarge);
+            }
+            this.input.classList.remove(TextInputControlBase.controlSizeSmall);
+            this.input.classList.remove(TextInputControlBase.controlSizeMedium);
+        }
+        else {
+            this.input.classList.remove(TextInputControlBase.controlSizeSmall);
+            this.input.classList.remove(TextInputControlBase.controlSizeMedium);
+            this.input.classList.remove(TextInputControlBase.controlSizeLarge);
+        }
+    }
+
     // #endregion public interface
+
+
 
 
     // #region control state
@@ -268,7 +313,7 @@ export class TextInputControlBase implements OnDestroy, ControlValueAccessor, Ge
      * Should be overriden in derived classes as needed.
      * @param value - The cooked value for the control
      */
-    protected valueToString(value: any) : string {
+    protected valueToString(value: any): string {
         return value ? value.toString() : "";
     }
 }
