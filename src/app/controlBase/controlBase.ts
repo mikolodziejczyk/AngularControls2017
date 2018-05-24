@@ -1,7 +1,7 @@
 import { Input, ElementRef, OnDestroy } from "@angular/core";
 import { FormControl, ControlValueAccessor } from "@angular/forms";
-import { setControlError, removeControlError } from "./validationErrorHelpers";
-import { GeneralControl } from "./generalControl";
+import { setControlError, removeControlError } from "../validationErrorHelpers";
+import { GeneralControl } from "../generalControl";
 
 export class ControlBase implements OnDestroy, ControlValueAccessor, GeneralControl {
     constructor(protected host: ElementRef) { }
