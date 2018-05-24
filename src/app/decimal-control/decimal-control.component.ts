@@ -2,8 +2,9 @@ import { Component, OnInit, OnDestroy, ElementRef, forwardRef, Input } from '@an
 import { ControlBase } from '../controlBase';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { setControlError, removeControlError } from '../validationErrorHelpers';
-import { localeParseInt } from '../numberHelpers/localeNumberParse';
-import { formatNumberPlain } from '../numberHelpers/localeNumberFormat';
+import { localeParseInt, localePaseFloat } from '../numberHelpers/localeNumberParse';
+import { formatNumberPlain, formatNumber } from '../numberHelpers/localeNumberFormat';
+import { roundAwayFromZero } from '../numberHelpers/numberHelpers';
 
 @Component({
   selector: 'mko-decimal-control',
@@ -21,6 +22,7 @@ export class DecimalControlComponent extends ControlBase implements OnInit, OnDe
   static error_NaN: string = "notANumber";
   static error_min: string = "min";
   static error_max: string = "max";
+  static error_maxDecimalDigits: string = "maxDecimalDigits";
 
   constructor(host: ElementRef) {
     super(host);
@@ -58,6 +60,19 @@ export class DecimalControlComponent extends ControlBase implements OnInit, OnDe
   get max(): number {
     return this._max;
   }
+
+  private _maxDecimalDigits: number | undefined = undefined;
+
+  @Input() set maxDecimalDigits(v: number) {
+    if (this._maxDecimalDigits != v) {
+      this._maxDecimalDigits = v;
+      this.updateInternalValidators();
+    }
+  }
+  get maxDecimalDigits(): number {
+    return this._maxDecimalDigits;
+  }
+
 
   // #endregion public interface 
 
@@ -105,11 +120,30 @@ export class DecimalControlComponent extends ControlBase implements OnInit, OnDe
     }
   }
 
+
+  private checkMaxDecimalDigits() {
+    if (this.isEmpty || !this.isNumber) return;
+
+    let maxDecimalDigitsFailed: boolean = false;
+    if (this.maxDecimalDigits !== undefined) {
+      let rounded = roundAwayFromZero(this.value, this.maxDecimalDigits);
+      maxDecimalDigitsFailed = (rounded != this.value);
+    }
+    if (maxDecimalDigitsFailed) {
+      let message = sprintf("W '%s' możesz podać do %d miejsc po przecinku.", this.label, this.maxDecimalDigits);
+      setControlError(this.control, DecimalControlComponent.error_maxDecimalDigits, message);
+    }
+    else {
+      removeControlError(this.control, DecimalControlComponent.error_maxDecimalDigits);
+    }
+  }
+
   // #endregion internal validators
 
 
   updateInternalValidators() {
     super.updateInternalValidators(); // this handles isEmpty
+
 
     if (!this.isNumber) {
       let message = sprintf("Wartość w polu '%s' musi być liczbą.", this.label);
@@ -119,6 +153,8 @@ export class DecimalControlComponent extends ControlBase implements OnInit, OnDe
     this.checkMin();
 
     this.checkMax();
+
+    this.checkMaxDecimalDigits();
 
   }
 
@@ -133,7 +169,7 @@ export class DecimalControlComponent extends ControlBase implements OnInit, OnDe
 
     if (typeof (rawValue) === "string") {
       if (!this.isEmpty) {
-        this.value = localeParseInt(rawValue);
+        this.value = localePaseFloat(rawValue);
         this.isNumber = !isNaN(this.value);
         if (!this.isNumber) this.value = null;
       }
@@ -149,5 +185,20 @@ export class DecimalControlComponent extends ControlBase implements OnInit, OnDe
 
   }
 
-
+  protected valueToString(value: any) {
+    let r: string = "";
+    if (value) {
+      if (typeof (value) == "number") {
+        r = formatNumberPlain(value);
+      }
+      else if (typeof (value) == "string") {
+        r = value;
+      }
+      else {
+        r = value.toString();
+      }
+    }
+    
+    return r;
+  }
 }

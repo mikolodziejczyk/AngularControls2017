@@ -28,7 +28,7 @@ export class AppComponent implements OnDestroy {
   createForm() {
     this.myForm = this.fb.group({
       firstNumber: [""],
-      secondNumber: [null],
+      secondNumber: [2.34],
       from: [null],
       to: [2030],
       year: [2015],

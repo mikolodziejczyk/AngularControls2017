@@ -58,16 +58,6 @@ export class ControlBase implements OnDestroy, ControlValueAccessor, GeneralCont
     }
 
 
-    /**
-     * Provides generic transformation from cooked value (e.g. number) into a string.
-     * Should be overriden in derived classes as needed.
-     * @param value - The cooked value for the control
-     */
-    protected valueToString(value: any) {
-        return value ? value.toString() : "";
-    }
-
-
     // #region ControlValueAccessor
 
 
@@ -237,5 +227,12 @@ export class ControlBase implements OnDestroy, ControlValueAccessor, GeneralCont
         this.updateInternalValidators();
     }
 
-
+    /**
+     * Provides generic transformation from cooked value (e.g. number) into a string.
+     * Should be overriden in derived classes as needed.
+     * @param value - The cooked value for the control
+     */
+    protected valueToString(value: any) : string {
+        return value ? value.toString() : "";
+    }
 }

@@ -8,12 +8,14 @@
     <form class="form-horizontal" [formGroup]="myForm" novalidate (ngSubmit)="onSubmit()">
 
         <mko-form-row [generalControl]="numberComponent">
-            <mko-number-control [id]="'secondNumber'" #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Cena jedn."
-                [isRequired]="true" min=-10 max=103320.45 maxDecimalDigits=2 help="Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>"></mko-number-control>
+            <mko-decimal-control [id]="'secondNumber'" #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Cena jedn."
+                [isRequired]="true" min=-10 max=103320.45 maxDecimalDigits=2 help="Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>">
+            </mko-decimal-control>
         </mko-form-row>
         <mko-form-row [generalControl]="fromComponent">
-            <mko-number-control [id]="'from'" #fromComponent formControlName="from" [control]="from" label="Wartość od" [isRequired]="true"
-                min=0 max=99999 maxDecimalDigits=2></mko-number-control>
+            <mko-decimal-control [id]="'from'" #fromComponent formControlName="from" [control]="from" label="Wartość od" [isRequired]="true"
+                min=0 max=99999 maxDecimalDigits=2>
+            </mko-decimal-control>
         </mko-form-row>
         <mko-form-row [generalControl]="toComponent">
             <mko-integer-control [id]="'to'" #toComponent formControlName="to" [control]="to" label="Wartość do" [isRequired]="true"
