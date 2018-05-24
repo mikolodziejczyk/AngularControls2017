@@ -6,7 +6,7 @@ import { localeParseInt } from '../numberHelpers/localeNumberParse';
 import { formatNumberPlain } from '../numberHelpers/localeNumberFormat';
 
 @Component({
-  selector: 'app-decimal-control',
+  selector: 'mko-decimal-control',
   templateUrl: './decimal-control.component.html',
   styleUrls: ['./decimal-control.component.css'],
   providers: [
