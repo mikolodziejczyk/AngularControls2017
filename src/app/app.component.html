@@ -14,7 +14,7 @@
         </mko-form-row>
         <mko-form-row [generalControl]="fromComponent">
             <mko-decimal-control [id]="'from'" #fromComponent formControlName="from" [control]="from" label="Wartość od" [isRequired]="true"
-                min=0 max=99999 maxDecimalDigits=2>
+                min=0 max=99999 maxDecimalDigits=2 placeholder="I've got a placeholder">
             </mko-decimal-control>
         </mko-form-row>
         <mko-form-row [generalControl]="toComponent">

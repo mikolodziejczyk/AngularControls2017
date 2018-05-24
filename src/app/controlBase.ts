@@ -153,6 +153,16 @@ export class ControlBase implements OnDestroy, ControlValueAccessor, GeneralCont
         return this.input.id;
     }
 
+    /**
+     * The input.placeholder in this control
+     */
+    @Input() set placeholder(v: string) {
+        this.input.placeholder = v
+    }
+    get placeholder(): string {
+        return this.input.placeholder;
+    }
+
 
     private _isRequired: boolean = false;
 
