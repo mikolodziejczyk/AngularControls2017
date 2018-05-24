@@ -27,6 +27,12 @@
                 <input type="text" class="form-control" placeholder="From a specified template" />
             </mko-integer-control>
         </mko-form-row>
+        <mko-form-row [generalControl]="monthComponent">
+            <mko-integer-control [id]="'month'" #monthComponent formControlName="month" [control]="month" label="Miesiąc" [isRequired]="true"
+                min=1 max=12 help="Podaj tutaj miesiąc, lorem ipsum.">
+                <input type="text" class="form-control" placeholder="From a specified template" />
+            </mko-integer-control>
+        </mko-form-row>
         <div class="form-group">
             <!-- <label class="control-label col-sm-4" [for]="numberComponent.id">{{ numberComponent.label }}</label>
             <div class="col-sm-8">
