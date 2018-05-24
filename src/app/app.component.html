@@ -35,6 +35,12 @@
                 <!-- <input type="text" class="form-control" placeholder="From a specified template" /> -->
             </mko-decimal-control>
         </mko-form-row>
+        <mko-form-row [generalControl]="firstNameomponent">
+            <mko-string-control [id]="'firstname'" #firstNameomponent formControlName="firstName" [control]="firstName" label="Imię" [isRequired]="true"
+               minLength=3 help="Podaj tutaj miesiąc, lorem ipsum.">
+                <!-- <input type="text" class="form-control" placeholder="From a specified template" /> -->
+            </mko-string-control >
+        </mko-form-row>
         <div class="form-group">
             <!-- <label class="control-label col-sm-4" [for]="numberComponent.id">{{ numberComponent.label }}</label>
             <div class="col-sm-8">

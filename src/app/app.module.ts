@@ -15,6 +15,7 @@ import { FormRowComponent } from './form-row/form-row.component';
 import { ErrorMessageFormatter } from './errorMessages/errorMessageFormatter';
 import { IntegerControlComponent } from './integer-control/integer-control.component';
 import { DecimalControlComponent } from './decimal-control/decimal-control.component';
+import { StringControlComponent } from './string-component/string-control.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { DecimalControlComponent } from './decimal-control/decimal-control.compo
     ValidationErrorsComponent,
     FormRowComponent,
     IntegerControlComponent,
-    DecimalControlComponent
+    DecimalControlComponent,
+    StringControlComponent
   ],
   imports: [
     BrowserModule,
