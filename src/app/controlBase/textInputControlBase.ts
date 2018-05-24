@@ -6,10 +6,6 @@ import { GeneralControl } from "../generalControl";
 export class TextInputControlBase implements OnDestroy, ControlValueAccessor, GeneralControl {
     constructor(protected host: ElementRef) { }
 
-    /**
-     * Reference to FormControl, needs to be injected into this control.
-     */
-    @Input() control: FormControl;
 
     /**
      * The actual input element.
@@ -136,7 +132,13 @@ export class TextInputControlBase implements OnDestroy, ControlValueAccessor, Ge
 
     // #endregion event handlers
 
-    // #region public interface
+    // #region GeneralControl interface
+
+    /**
+     * Reference to FormControl, needs to be injected into this control.
+     */
+    @Input() control: FormControl;
+
 
     /**
      * The label displayed for this control.
@@ -153,16 +155,6 @@ export class TextInputControlBase implements OnDestroy, ControlValueAccessor, Ge
         return this.input.id;
     }
 
-    /**
-     * The input.placeholder in this control
-     */
-    @Input() set placeholder(v: string) {
-        this.input.placeholder = v
-    }
-    get placeholder(): string {
-        return this.input.placeholder;
-    }
-
 
     private _isRequired: boolean = false;
 
@@ -177,6 +169,40 @@ export class TextInputControlBase implements OnDestroy, ControlValueAccessor, Ge
     }
 
     @Input() help: string;
+
+    // #endregion GeneralControl interface
+
+    // #region public interface
+
+    /**
+     * The input.placeholder in this control
+     */
+    @Input() set placeholder(v: string) {
+        this.input.placeholder = v
+    }
+    get placeholder(): string {
+        return this.input.placeholder;
+    }
+
+    /**
+     * The input.name in this control
+     */
+    @Input() set name(v: string) {
+        this.input.name = v
+    }
+    get name(): string {
+        return this.input.name;
+    }
+
+    /**
+     * The input.maxLength in this control
+     */
+    @Input() set maxLength(v: number) {
+        this.input.maxLength = v
+    }
+    get maxLength(): number {
+        return this.input.maxLength;
+    }
 
     // #endregion public interface
 
