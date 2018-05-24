@@ -1,9 +1,9 @@
-import { Component, OnInit, forwardRef, Input, ViewChild, ElementRef, ContentChild, OnDestroy } from '@angular/core';
-import { NG_VALUE_ACCESSOR, FormControl } from '@angular/forms';
+import { Component, OnInit, OnDestroy, ElementRef, forwardRef, Input } from '@angular/core';
+import { ControlBase } from '../controlBase';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { setControlError, removeControlError } from '../validationErrorHelpers';
-import {  localeParseInt } from '../numberHelpers/localeNumberParse';
+import { localeParseInt } from '../numberHelpers/localeNumberParse';
 import { formatNumberPlain } from '../numberHelpers/localeNumberFormat';
-import { GeneralControl } from '../generalControl';
 
 @Component({
   selector: 'mko-integer-control',
@@ -17,119 +17,24 @@ import { GeneralControl } from '../generalControl';
     }
   ]
 })
-export class IntegerControlComponent implements OnInit, OnDestroy, GeneralControl {
-
+export class IntegerControlComponent extends ControlBase implements OnInit, OnDestroy {
   static error_NaN: string = "notANumber";
   static error_min: string = "min";
   static error_max: string = "max";
- 
-  constructor(private host: ElementRef) { }
 
-  @Input() control: FormControl;
-
-  _input: HTMLInputElement;
-
-  /**
-   * Gets a reference to the input element by finding it in the html tree, creates one if needed.
-   */
-  get input(): HTMLInputElement {
-    if (!this._input) {
-      this._input = (<HTMLSpanElement>this.host.nativeElement).querySelector("input");
-
-      if (!this._input) {
-        (<HTMLSpanElement>this.host.nativeElement).innerHTML = '<input type="text" class="form-control"/>';
-        this._input = (<HTMLSpanElement>this.host.nativeElement).querySelector("input");
-      }
-
-      // wire handlers here once the element is obtained
-      this._input.addEventListener("change", this.onInput);
-      this._input.addEventListener("input", this.onInput);
-      this._input.addEventListener("blur", this.onBlur);
-    }
-    return this._input;
+  constructor(host: ElementRef) {
+    super(host);
   }
 
- 
   ngOnInit() {
   }
 
+
   ngOnDestroy(): void {
-    this.input.removeEventListener("change", this.onInput);
-    this.input.removeEventListener("input", this.onInput);
-    this.input.removeEventListener("blur", this.onBlur);
+    super.ngOnDestroy();
   }
 
-  writeValue(obj: any): void {
-    if (this.input) {
-      this.input.value = obj ? obj.toString() : "";
-
-      window.setTimeout(() => {
-        let rawValue: string = this.input.value;
-        this.updateValueAndState(rawValue, false);
-      }, 0);
-
-    }
-    else {
-      throw new Error("writeValue - input not ready yet.");
-    }
-  }
-
-  propagateChange = (_: any) => { };
-
-
-  registerOnChange(fn: any): void {
-
-    this.propagateChange = fn;
-  }
-
-  onTouched = () => { };
-
-
-  registerOnTouched(fn: any): void {
-
-    this.onTouched = fn;
-  }
-
-
-  setDisabledState(isDisabled: boolean): void {
-
-    this.input.disabled = isDisabled;
-  }
-
-  onInput = () => {
-
-    let rawValue: string = this.input.value;
-    this.updateValueAndState(rawValue, true);
-  }
-
-  onBlur = () => {
-
-    this.onTouched();
-  }
-
-
-  @Input() label: string;
-
-
-  @Input() set id(v: string) {
-    this.input.id = v
-  }
-  get id(): string {
-    return this.input.id;
-  }
-
-
-  private _isRequired: boolean = false;
-
-  @Input() set isRequired(v: boolean) {
-    if (this._isRequired != v) {
-      this._isRequired = v;
-      this.updateInternalValidators();
-    }
-  }
-  get isRequired(): boolean {
-    return this._isRequired;
-  }
+  // #region public interface
 
   private _min: number = undefined;
 
@@ -154,26 +59,16 @@ export class IntegerControlComponent implements OnInit, OnDestroy, GeneralContro
     return this._max;
   }
 
-  @Input() help: string;
+  // #endregion public interface 
 
-  updateInternalValidators() {
-    if (this.isEmpty && this.isRequired) {
-      setControlError(this.control, "required", true);
-    }
-    else {
-      removeControlError(this.control, "required");
-    }
+  // #region control state
 
-    if (!this.isNumber) {
-      let message = sprintf("Wartość w polu '%s' musi być liczbą.", this.label);
-      setControlError(this.control, IntegerControlComponent.error_NaN, message);
-    }
+  private isNumber: boolean;
+  private value: number;
 
-    this.checkMin();
+  // #endregion control state
 
-    this.checkMax();
-
-  }
+  // #region internal validators
 
   private checkMin() {
     if (this.isEmpty || !this.isNumber) return;
@@ -210,9 +105,28 @@ export class IntegerControlComponent implements OnInit, OnDestroy, GeneralContro
     }
   }
 
-  updateValueAndState(rawValue: string | number | null, emitChange: boolean = false) {
-    console.log(`updateInternalState - called with ${rawValue}.`);
-    this.isEmpty = rawValue === null || rawValue === undefined || rawValue == "";
+  // #endregion internal validators
+
+
+  updateInternalValidators() {
+    super.updateInternalValidators(); // this handles isEmpty
+
+    if (!this.isNumber) {
+      let message = sprintf("Wartość w polu '%s' musi być liczbą.", this.label);
+      setControlError(this.control, IntegerControlComponent.error_NaN, message);
+    }
+
+    this.checkMin();
+
+    this.checkMax();
+
+  }
+
+
+  updateValueAndState(rawValue: string | number | null): any {
+
+    super.updateValueAndState(rawValue); // this determines isEmpty
+
     this.isNumber = true;
 
     if (rawValue && typeof (rawValue) !== "number") rawValue = rawValue.toString();
@@ -231,17 +145,9 @@ export class IntegerControlComponent implements OnInit, OnDestroy, GeneralContro
       this.value = rawValue;
     }
 
-    if (emitChange) {
-      this.propagateChange(this.value);
-    }
-
-    this.updateInternalValidators();
+    return this.value;
 
   }
 
-
-  private isNumber: boolean;
-  private isEmpty: boolean;
-  private value: number;
 
 }
