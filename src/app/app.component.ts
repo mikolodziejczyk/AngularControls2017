@@ -25,6 +25,7 @@ export class AppComponent implements OnDestroy {
   year: FormControl;
   month: FormControl;
   firstName: FormControl;
+  anotherNumber: FormControl;
 
   createForm() {
     this.myForm = this.fb.group({
@@ -34,7 +35,8 @@ export class AppComponent implements OnDestroy {
       to: [2030],
       year: [2015],
       month: 2,
-      firstName: "John"
+      firstName: "John",
+      anotherNumber: [123]
     });
 
     this.secondNumber = <FormControl>this.myForm.controls["secondNumber"];
@@ -43,6 +45,7 @@ export class AppComponent implements OnDestroy {
     this.year = <FormControl>this.myForm.controls["year"];
     this.month = <FormControl>this.myForm.controls["month"];
     this.firstName = <FormControl>this.myForm.controls["firstName"];
+    this.anotherNumber = <FormControl>this.myForm.controls["anotherNumber"];
   }
 
 

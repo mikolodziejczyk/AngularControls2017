@@ -1,4 +1,4 @@
-<div *ngIf="control.invalid && (control.dirty || control.touched)" [class]="containerCssClass">
+<div *ngIf="control?.invalid && (control?.dirty || control?.touched)" [class]="containerCssClass">
   <label *ngFor="let s of errorMessages" [class]="messageCssClass" for="{{id}}">
     {{s}}
   </label>

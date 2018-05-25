@@ -1,0 +1,10 @@
+<mko-form-row [generalControl]="editor">
+
+  <ng-container *ngIf="isDecimal">
+    <mko-decimal-control [id]="'xxx'" #editor [formControl]="boundFormControl" [control]="boundFormControl" min=-10 max=103320.45
+      maxDecimalDigits=2 controlSize="medium">
+    </mko-decimal-control>
+  </ng-container>
+
+  
+</mko-form-row>

@@ -43,22 +43,22 @@ export class FormRowComponent implements OnInit, AfterViewInit {
 
   @Input() set label(v: string) { this._label = v; };
   get label(): string {
-    return this._label || this.generalControl.label;
+    return this._label || this.generalControl ? this.generalControl.label : null;
   }
-  
+
   @Input() set id(v: string) { this._id = v; };
   get id(): string {
-    return this._id || this.generalControl.id;
+    return this._id || this.generalControl ? this.generalControl.id : null;
   }
 
   @Input() set help(v: string) { this._help = v; };
   get help(): string {
-    return this._help || this.generalControl.help;
+    return this._help || this.generalControl ? this.generalControl.help : null;
   }
 
-  @Input() set control(v: FormControl) {this._control = v;};
+  @Input() set control(v: FormControl) { this._control = v; };
   get control(): FormControl {
-    return this._control || this.generalControl.control;
+    return this._control || this.generalControl ? this.generalControl.control : null;
   }
 
   @Input() generalControl: GeneralControl;

@@ -1,4 +1,4 @@
-<div class="form-group" [class.has-error]="control.invalid && (control.dirty || control.touched)" [class.has-success]="control.valid">
+<div class="form-group" [class.has-error]="control && (control.invalid && (control.dirty || control.touched))" [class.has-success]="control?.valid">
   <div class="col-sm-4 label-wrapper">
     <label class="control-label" for="{{id}}">{{ label }}</label>
       <a class="help-icon" role="button" tabindex="0" data-trigger="focus"  [class.inactive]="!help" #helpIcon><span class="glyphicon glyphicon-question-sign"></span></a>
