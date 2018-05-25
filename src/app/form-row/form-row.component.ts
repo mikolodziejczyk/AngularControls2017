@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { GeneralControl } from '../generalControl';
+import { GeneralControl } from '../generalControl/generalControl';
 // import  "@types/jquery"
 // import  "@types/bootstrap"
 // /// <reference types="jquery"/>

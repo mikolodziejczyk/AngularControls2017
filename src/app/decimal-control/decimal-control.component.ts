@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ElementRef, forwardRef, Input } from '@angular/core';
-import { TextInputControlBase } from '../controlBase/textInputControlBase';
+import { TextInputControlBase } from '../textInputControlBase/textInputControlBase';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { setControlError, removeControlError } from '../validationErrorHelpers';
 import { localeParseInt, localePaseFloat } from '../numberHelpers/localeNumberParse';

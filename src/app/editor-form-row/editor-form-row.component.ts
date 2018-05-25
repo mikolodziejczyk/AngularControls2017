@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, ViewChild, AfterContentInit } from '@angular/core';
 import { DecimalControlComponent } from '../decimal-control/decimal-control.component';
 import { FormControl, FormsModule } from '@angular/forms';
-import { GeneralControlMetadata } from '../controlMetadata/generalControlMetadata';
-import { TextInputControlBase } from '../controlBase/textInputControlBase';
+import { GeneralControlMetadata } from '../generalControl/generalControlMetadata';
+import { TextInputControlBase } from '../textInputControlBase/textInputControlBase';
 import { FormRowComponent } from '../form-row/form-row.component';
-import { GeneralControl } from '../generalControl';
+import { GeneralControl } from '../generalControl/generalControl';
 
 @Component({
   selector: 'mko-editor-form-row',

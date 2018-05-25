@@ -1,5 +1,5 @@
 import { FormControl } from "@angular/forms";
-import { GeneralControlMetadata } from "./controlMetadata/generalControlMetadata";
+import { GeneralControlMetadata } from "./generalControlMetadata";
 
 export interface GeneralControl {
     label: string;

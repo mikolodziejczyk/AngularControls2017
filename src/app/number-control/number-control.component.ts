@@ -7,8 +7,8 @@ import { sprintf } from "sprintf-js"
 import { roundAwayFromZero } from '../numberHelpers/numberHelpers';
 import { formatNumberPlain } from '../numberHelpers/localeNumberFormat';
 import { element } from 'protractor';
-import { GeneralControl } from '../generalControl';
-import { GeneralControlMetadata } from '../controlMetadata/generalControlMetadata';
+import { GeneralControl } from '../generalControl/generalControl';
+import { GeneralControlMetadata } from '../generalControl/generalControlMetadata';
 
 // TODO: 
 // try to obtain control from a directive rather than from a binding - unclear whether possible

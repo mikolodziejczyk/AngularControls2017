@@ -1,7 +1,7 @@
 import { Component, OnInit, forwardRef, ElementRef, Input, OnDestroy } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { setControlError, removeControlError } from '../validationErrorHelpers';
-import { TextInputControlBase } from '../controlBase/textInputControlBase';
+import { TextInputControlBase } from '../textInputControlBase/textInputControlBase';
 import { StringControlMetadata } from './stringControlMetadata';
 
 /*

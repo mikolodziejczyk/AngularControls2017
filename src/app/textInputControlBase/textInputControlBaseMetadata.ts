@@ -1,4 +1,4 @@
-import { GeneralControlMetadata } from "../controlMetadata/generalControlMetadata";
+import { GeneralControlMetadata } from "../generalControl/generalControlMetadata";
 
 export interface TextInputControlBaseMetadata extends GeneralControlMetadata {
     placeholder?: string;

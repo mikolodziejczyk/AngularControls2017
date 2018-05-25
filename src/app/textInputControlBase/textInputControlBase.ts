@@ -1,8 +1,8 @@
 import { Input, ElementRef, OnDestroy } from "@angular/core";
 import { FormControl, ControlValueAccessor } from "@angular/forms";
 import { setControlError, removeControlError } from "../validationErrorHelpers";
-import { GeneralControl } from "../generalControl";
-import { GeneralControlMetadata } from "../controlMetadata/generalControlMetadata";
+import { GeneralControl } from "../generalControl/generalControl";
+import { GeneralControlMetadata } from "../generalControl/generalControlMetadata";
 import { uniqueControlIdGenerator } from "../uniqueControlIdGenerator";
 import { TextInputControlBaseMetadata } from "./textInputControlBaseMetadata";
 

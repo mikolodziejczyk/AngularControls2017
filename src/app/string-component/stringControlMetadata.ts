@@ -1,4 +1,4 @@
-import { TextInputControlBaseMetadata } from "../controlBase/textInputControlBaseMetadata";
+import { TextInputControlBaseMetadata } from "../textInputControlBase/textInputControlBaseMetadata";
 
 export interface StringControlMetadata extends TextInputControlBaseMetadata {
     minLength?: number;
