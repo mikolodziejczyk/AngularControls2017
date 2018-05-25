@@ -5,6 +5,7 @@ import { setControlError, removeControlError } from '../validationErrorHelpers';
 import { localeParseInt, localePaseFloat } from '../numberHelpers/localeNumberParse';
 import { formatNumberPlain, formatNumber } from '../numberHelpers/localeNumberFormat';
 import { roundAwayFromZero } from '../numberHelpers/numberHelpers';
+import { DecimalControlMetadata } from './decimalControlMetadata';
 
 @Component({
   selector: 'mko-decimal-control',
@@ -74,7 +75,6 @@ export class DecimalControlComponent extends TextInputControlBase implements OnI
   get maxDecimalDigits(): number {
     return this._maxDecimalDigits;
   }
-
 
   // #endregion public interface 
 
@@ -202,5 +202,12 @@ export class DecimalControlComponent extends TextInputControlBase implements OnI
     }
     
     return r;
+  }
+
+  setMetadata(v : DecimalControlMetadata) : void {
+    super.setMetadata(v);
+    if (v.min!==undefined) this.min = v.min;
+    if (v.max!==undefined) this.max = v.max;
+    if (v.maxDecimalDigits!==undefined) this.maxDecimalDigits = v.maxDecimalDigits;
   }
 }

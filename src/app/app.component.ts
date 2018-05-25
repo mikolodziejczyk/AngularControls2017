@@ -4,6 +4,9 @@ import { Subscription } from 'rxjs/Subscription';
 import { NumberControlComponent } from './number-control/number-control.component';
 import { GeneralControlMetadata } from './controlMetadata/generalControlMetadata';
 import { TextInputControlBaseMetadata } from './controlBase/textInputControlBaseMetadata';
+import { DecimalControlMetadata } from './decimal-control/decimalControlMetadata';
+import { IntegerControlMetadata } from './integer-control/integerControlMetadata';
+import { StringControlMetadata } from './string-component/stringControlMetadata';
 
 @Component({
   selector: 'app-root',
@@ -32,14 +35,17 @@ export class AppComponent implements OnDestroy {
   lastName: FormControl;
 
 
-  formMetadata: { [name: string]: GeneralControlMetadata | TextInputControlBaseMetadata } = {
+  formMetadata: { [name: string]: GeneralControlMetadata | TextInputControlBaseMetadata | DecimalControlMetadata | IntegerControlMetadata | StringControlMetadata } = {
     unitPrice : {
       type: "decimal",
       id : "unitPrice_id",
       name: "unitPrice_name",
       label : "Cena jednostkowa",
       isRequired: false,
-      help: "Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>"
+      help: "Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>",
+      min: 0,
+      max: 100000,
+      maxDecimalDigits: 2
     },
     startYear : {
       type: "integer",
@@ -48,7 +54,9 @@ export class AppComponent implements OnDestroy {
       help: "Rok początkowy <b>lorem ipsum</b> with html.",
       placeholder: "Rok początkowy",
       maxLength: 4,
-      controlSize: "medium"
+      controlSize: "medium",
+      min: 1900,
+      max: 2100
     },
     lastName : {
       type: "string",
@@ -56,6 +64,7 @@ export class AppComponent implements OnDestroy {
       isRequired: true,
       controlSize: "medium",
       maxLength: 20,
+      minLength: 2
     }
 
   }
@@ -70,7 +79,7 @@ export class AppComponent implements OnDestroy {
       month: 2,
       firstName: "John",
       anotherNumber: [123],
-      startYear: [1],
+      startYear: [2000],
       lastName: ["Smith"]
     });
 

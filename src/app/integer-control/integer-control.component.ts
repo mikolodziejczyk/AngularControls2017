@@ -4,6 +4,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { setControlError, removeControlError } from '../validationErrorHelpers';
 import { localeParseInt } from '../numberHelpers/localeNumberParse';
 import { formatNumberPlain } from '../numberHelpers/localeNumberFormat';
+import { IntegerControlMetadata } from './integerControlMetadata';
 
 @Component({
   selector: 'mko-integer-control',
@@ -27,7 +28,7 @@ export class IntegerControlComponent extends TextInputControlBase implements OnI
   }
 
   ngOnInit() {
-    if (!this.maxLength || this.maxLength===-1) this.maxLength = 12;
+    if (!this.maxLength || this.maxLength === -1) this.maxLength = 12;
     if (!this.controlSize) this.controlSize = "small";
   }
 
@@ -151,5 +152,9 @@ export class IntegerControlComponent extends TextInputControlBase implements OnI
 
   }
 
-
+  setMetadata(v: IntegerControlMetadata): void {
+    super.setMetadata(v);
+    if (v.min !== undefined) this.min = v.min;
+    if (v.max !== undefined) this.max = v.max;
+  }
 }

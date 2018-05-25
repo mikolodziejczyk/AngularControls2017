@@ -191,25 +191,29 @@ export class TextInputControlBase implements OnDestroy, ControlValueAccessor, Ge
 
     @Input() set metadata(v: GeneralControlMetadata) {
         if (!v) return;
+        this.setMetadata(v);
 
+    }
+    get metadata(): GeneralControlMetadata {
+        return this._metadata;
+    }
 
-
+    /**
+     * Internal metadata set method. Allows overriding in the derived classes.
+     */
+    protected setMetadata(v: GeneralControlMetadata): void {
         let hasMetatadaChanged: boolean = this._metadata != v;
         this._metadata = <TextInputControlBaseMetadata>v;
 
         this.label = this._metadata.label;
         this.isRequired = this._metadata.isRequired;
         this.id = this._metadata.id || uniqueControlIdGenerator.getId();
-        if (this._metadata) this.name = this._metadata.name;
+        if (this._metadata.name !== undefined) this.name = this._metadata.name;
         this.help = this._metadata.help || null;
-        if (this._metadata) this.placeholder = this._metadata.placeholder;
-        if (this._metadata)  this.maxLength = this._metadata.maxLength;
-        if (this._metadata) this.controlSize = this._metadata.controlSize;
+        if (this._metadata.placeholder !== undefined) this.placeholder = this._metadata.placeholder;
+        if (this._metadata.maxLength !== undefined) this.maxLength = this._metadata.maxLength;
+        if (this._metadata.controlSize !== undefined) this.controlSize = this._metadata.controlSize;
     }
-    get metadata(): GeneralControlMetadata {
-        return this._metadata;
-    }
-    
 
     // #endregion GeneralControl interface
 
@@ -242,7 +246,7 @@ export class TextInputControlBase implements OnDestroy, ControlValueAccessor, Ge
     @Input() set controlSize(v: "small" | "medium" | "large" | null) {
         this._controlSize = v;
         this.applyControlSize(this._controlSize);
-        
+
     }
 
     get controlSize(): "small" | "medium" | "large" {

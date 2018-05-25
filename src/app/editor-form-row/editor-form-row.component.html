@@ -1,18 +1,16 @@
 <mko-form-row #formRow>
 
   <ng-container *ngIf="isDecimal">
-    <mko-decimal-control [metadata]="metadata"  #editor [formControl]="boundFormControl" [control]="boundFormControl" min=-10 max=103320.45
-      maxDecimalDigits=2 controlSize="medium">
+    <mko-decimal-control [metadata]="metadata" #editor [formControl]="boundFormControl" [control]="boundFormControl">
     </mko-decimal-control>
   </ng-container>
   <ng-container *ngIf="isInteger">
-    <mko-integer-control [metadata]="metadata"  #editor [formControl]="boundFormControl" [control]="boundFormControl" min=-10 max=10
-      controlSize="medium">
+    <mko-integer-control [metadata]="metadata" #editor [formControl]="boundFormControl" [control]="boundFormControl">
     </mko-integer-control>
   </ng-container>
   <ng-container *ngIf="isString">
-    <mko-string-control [metadata]="metadata"  #editor [formControl]="boundFormControl" [control]="boundFormControl" controlSize="medium">
+    <mko-string-control [metadata]="metadata" #editor [formControl]="boundFormControl" [control]="boundFormControl">
     </mko-string-control>
   </ng-container>
-  
+
 </mko-form-row>
