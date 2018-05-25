@@ -2,6 +2,7 @@ import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 import { NumberControlComponent } from './number-control/number-control.component';
+import { GeneralControlMetadata } from './controlMetadata/generalControlMetadata';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,31 @@ export class AppComponent implements OnDestroy {
   month: FormControl;
   firstName: FormControl;
   anotherNumber: FormControl;
+  startYear: FormControl;
+  lastName: FormControl;
+
+
+  formMetadata: { [name: string]: GeneralControlMetadata } = {
+    unitPrice : {
+      type: "decimal",
+      id : "unitPrice_id",
+      label : "Cena jednostkowa",
+      isRequired: false,
+      help: "Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>"
+    },
+    startYear : {
+      type: "integer",
+      label : "Rok - początek",
+      isRequired: true,
+      help: "Rok początkowy <b>lorem ipsum</b> with html."
+    },
+    lastName : {
+      type: "string",
+      label : "Nazwisko",
+      isRequired: true
+    }
+
+  }
 
   createForm() {
     this.myForm = this.fb.group({
@@ -36,7 +62,9 @@ export class AppComponent implements OnDestroy {
       year: [2015],
       month: 2,
       firstName: "John",
-      anotherNumber: [123]
+      anotherNumber: [123],
+      startYear: [1],
+      lastName: ["Smith"]
     });
 
     this.secondNumber = <FormControl>this.myForm.controls["secondNumber"];
@@ -46,6 +74,8 @@ export class AppComponent implements OnDestroy {
     this.month = <FormControl>this.myForm.controls["month"];
     this.firstName = <FormControl>this.myForm.controls["firstName"];
     this.anotherNumber = <FormControl>this.myForm.controls["anotherNumber"];
+    this.startYear = <FormControl>this.myForm.controls["startYear"];
+    this.lastName = <FormControl>this.myForm.controls["lastName"];
   }
 
 

@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, ViewChild, AfterContentInit } from '@angular/core';
 import { DecimalControlComponent } from '../decimal-control/decimal-control.component';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule } from '@angular/forms';
 import { GeneralControlMetadata } from '../controlMetadata/generalControlMetadata';
 import { TextInputControlBase } from '../controlBase/textInputControlBase';
+import { FormRowComponent } from '../form-row/form-row.component';
+import { GeneralControl } from '../generalControl';
 
 @Component({
   selector: 'mko-editor-form-row',
@@ -11,41 +13,36 @@ import { TextInputControlBase } from '../controlBase/textInputControlBase';
 })
 export class EditorFormRowComponent implements OnInit, AfterContentInit {
   constructor() {
-    this.applyMetadata(this.metadata);
+
    }
 
   ngOnInit() {
     
   }
 
-  metadata : GeneralControlMetadata = {
-    id : "xxxx",
-    label : "Jakaś wartość",
-    isRequired: false,
-    type: "decimal",
-    help: "Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>"
-  };
+  @Input() metadata : GeneralControlMetadata;
 
   ngAfterContentInit(): void {
-
+    window.setTimeout(() => {
+      this.formRow.generalControl = this.editor;
+    }, 0);
   }
 
-  @ViewChild("editor") editor: TextInputControlBase;
+  @ViewChild("editor") editor: GeneralControl;
+
+  @ViewChild("formRow") formRow: FormRowComponent;
 
   @Input() public boundFormControl: FormControl;
 
-  get type(): string {
-    return this.metadata.type;
-  }
-
   get isDecimal() : boolean {
-    return true; // this.metadata.type == "decimal";
+    return this.metadata.type == "decimal";
   }
 
-  applyMetadata(metadata: GeneralControlMetadata) {
-    this.editor.label = metadata.label;
-    this.editor.isRequired = metadata.isRequired;
-    this.editor.id = metadata.id;
-    this.editor.help = metadata.help || null;
+  get isInteger() : boolean {
+    return this.metadata.type == "integer";
+  }
+
+  get isString() : boolean {
+    return this.metadata.type == "string";
   }
 }

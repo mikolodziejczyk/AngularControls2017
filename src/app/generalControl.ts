@@ -1,4 +1,5 @@
 import { FormControl } from "@angular/forms";
+import { GeneralControlMetadata } from "./controlMetadata/generalControlMetadata";
 
 export interface GeneralControl {
     label: string;
@@ -6,4 +7,5 @@ export interface GeneralControl {
     help: string;
     id: string;
     control: FormControl;
+    metadata: GeneralControlMetadata;
 }

@@ -2,6 +2,8 @@ import { Input, ElementRef, OnDestroy } from "@angular/core";
 import { FormControl, ControlValueAccessor } from "@angular/forms";
 import { setControlError, removeControlError } from "../validationErrorHelpers";
 import { GeneralControl } from "../generalControl";
+import { GeneralControlMetadata } from "../controlMetadata/generalControlMetadata";
+import { uniqueControlIdGenerator } from "../uniqueControlIdGenerator";
 
 export class TextInputControlBase implements OnDestroy, ControlValueAccessor, GeneralControl {
     constructor(protected host: ElementRef) { }
@@ -159,7 +161,7 @@ export class TextInputControlBase implements OnDestroy, ControlValueAccessor, Ge
     }
 
 
-    private _isRequired: boolean = false;
+    protected _isRequired: boolean = false;
 
     @Input() set isRequired(v: boolean) {
         if (this._isRequired != v) {
@@ -172,6 +174,25 @@ export class TextInputControlBase implements OnDestroy, ControlValueAccessor, Ge
     }
 
     @Input() help: string;
+
+
+    protected _metadata: GeneralControlMetadata;
+
+    @Input() set metadata(v: GeneralControlMetadata) {
+        if (!v) return;
+
+        let hasMetatadaChanged: boolean = this._metadata != v;
+        this._metadata = v;
+
+        this.label = this._metadata.label;
+        this.isRequired = this._metadata.isRequired;
+        this.id = this._metadata.id || uniqueControlIdGenerator.getId();
+        this.help = this._metadata.help || null;
+    }
+    get metadata(): GeneralControlMetadata {
+        return this._metadata;
+    }
+    
 
     // #endregion GeneralControl interface
 

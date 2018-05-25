@@ -23,16 +23,7 @@ export class FormRowComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if (this.help) {
-      let helpHtml: string = this.help.replace(/(\r)?\n/g, "<br/>");
-
-      jQuery(this.helpIcon.nativeElement).popover({
-        content: helpHtml,
-        title: this.label,
-        html: true,
-        container: 'body'
-      });
-    }
+    this.setupPopover();
   }
 
   private _label: string;
@@ -51,15 +42,58 @@ export class FormRowComponent implements OnInit, AfterViewInit {
     return this._id || this.generalControl ? this.generalControl.id : null;
   }
 
-  @Input() set help(v: string) { this._help = v; };
+  @Input() set help(v: string) { 
+    this._help = v;
+    this.updatePopoverIfNeeded();
+  };
   get help(): string {
     return this._help || this.generalControl ? this.generalControl.help : null;
   }
 
-  @Input() set control(v: FormControl) { this._control = v; };
+  @Input() set control(v: FormControl) { 
+    this._control = v;
+    this.updatePopoverIfNeeded();
+   };
   get control(): FormControl {
     return this._control || this.generalControl ? this.generalControl.control : null;
   }
 
-  @Input() generalControl: GeneralControl;
+  _generalControl: GeneralControl;
+
+  @Input() set generalControl(v: GeneralControl) { 
+    this._generalControl = v;
+    this.updatePopoverIfNeeded();
+   };
+  get generalControl(): GeneralControl {
+    return this._generalControl;
+  }
+  
+
+  private _isPopoverInitialized: boolean = false;
+  private _currentPopoverHelp: string = null;
+
+  private updatePopoverIfNeeded() {
+    let hasHelpChanged = this._currentPopoverHelp != this.help;
+    if (hasHelpChanged) this.setupPopover();
+  }
+
+  private setupPopover() {
+    if (this._isPopoverInitialized) {
+      jQuery(this.helpIcon.nativeElement).popover('destroy');
+    }
+
+    if (this.help) {
+      let helpHtml: string = this.help.replace(/(\r)?\n/g, "<br/>");
+
+      jQuery(this.helpIcon.nativeElement).popover({
+        content: helpHtml,
+        title: this.label,
+        html: true,
+        container: 'body'
+      });
+
+      this._isPopoverInitialized = false;
+      this._currentPopoverHelp = this.help;
+    }
+  }
 }

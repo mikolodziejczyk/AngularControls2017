@@ -8,6 +8,7 @@ import { roundAwayFromZero } from '../numberHelpers/numberHelpers';
 import { formatNumberPlain } from '../numberHelpers/localeNumberFormat';
 import { element } from 'protractor';
 import { GeneralControl } from '../generalControl';
+import { GeneralControlMetadata } from '../controlMetadata/generalControlMetadata';
 
 // TODO: 
 // try to obtain control from a directive rather than from a binding - unclear whether possible
@@ -39,6 +40,8 @@ import { GeneralControl } from '../generalControl';
   ]
 })
 export class NumberControlComponent implements ControlValueAccessor, GeneralControl, OnInit, AfterViewInit {
+  metadata: GeneralControlMetadata;
+  
   static error_NaN: string = "notANumber";
   static error_min: string = "min";
   static error_max: string = "max";
