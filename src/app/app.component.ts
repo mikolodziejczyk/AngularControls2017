@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Subscription } from 'rxjs/Subscription';
 import { NumberControlComponent } from './number-control/number-control.component';
 import { GeneralControlMetadata } from './controlMetadata/generalControlMetadata';
+import { TextInputControlBaseMetadata } from './controlBase/textInputControlBaseMetadata';
 
 @Component({
   selector: 'app-root',
@@ -31,10 +32,11 @@ export class AppComponent implements OnDestroy {
   lastName: FormControl;
 
 
-  formMetadata: { [name: string]: GeneralControlMetadata } = {
+  formMetadata: { [name: string]: GeneralControlMetadata | TextInputControlBaseMetadata } = {
     unitPrice : {
       type: "decimal",
       id : "unitPrice_id",
+      name: "unitPrice_name",
       label : "Cena jednostkowa",
       isRequired: false,
       help: "Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>"
@@ -43,12 +45,17 @@ export class AppComponent implements OnDestroy {
       type: "integer",
       label : "Rok - początek",
       isRequired: true,
-      help: "Rok początkowy <b>lorem ipsum</b> with html."
+      help: "Rok początkowy <b>lorem ipsum</b> with html.",
+      placeholder: "Rok początkowy",
+      maxLength: 4,
+      controlSize: "medium"
     },
     lastName : {
       type: "string",
       label : "Nazwisko",
-      isRequired: true
+      isRequired: true,
+      controlSize: "medium",
+      maxLength: 20,
     }
 
   }

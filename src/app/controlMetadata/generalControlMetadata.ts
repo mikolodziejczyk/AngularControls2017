@@ -4,5 +4,6 @@ export interface GeneralControlMetadata {
     isRequired: boolean;
     help?: string;
     id?: string;
+    name?: string;
 }
 

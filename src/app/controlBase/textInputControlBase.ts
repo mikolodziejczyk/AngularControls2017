@@ -4,6 +4,7 @@ import { setControlError, removeControlError } from "../validationErrorHelpers";
 import { GeneralControl } from "../generalControl";
 import { GeneralControlMetadata } from "../controlMetadata/generalControlMetadata";
 import { uniqueControlIdGenerator } from "../uniqueControlIdGenerator";
+import { TextInputControlBaseMetadata } from "./textInputControlBaseMetadata";
 
 export class TextInputControlBase implements OnDestroy, ControlValueAccessor, GeneralControl {
     constructor(protected host: ElementRef) { }
@@ -176,18 +177,34 @@ export class TextInputControlBase implements OnDestroy, ControlValueAccessor, Ge
     @Input() help: string;
 
 
-    protected _metadata: GeneralControlMetadata;
+    /**
+     * The input.name in this control
+     */
+    @Input() set name(v: string) {
+        this.input.name = v
+    }
+    get name(): string {
+        return this.input.name;
+    }
+
+    protected _metadata: TextInputControlBaseMetadata;
 
     @Input() set metadata(v: GeneralControlMetadata) {
         if (!v) return;
 
+
+
         let hasMetatadaChanged: boolean = this._metadata != v;
-        this._metadata = v;
+        this._metadata = <TextInputControlBaseMetadata>v;
 
         this.label = this._metadata.label;
         this.isRequired = this._metadata.isRequired;
         this.id = this._metadata.id || uniqueControlIdGenerator.getId();
+        if (this._metadata) this.name = this._metadata.name;
         this.help = this._metadata.help || null;
+        if (this._metadata) this.placeholder = this._metadata.placeholder;
+        if (this._metadata)  this.maxLength = this._metadata.maxLength;
+        if (this._metadata) this.controlSize = this._metadata.controlSize;
     }
     get metadata(): GeneralControlMetadata {
         return this._metadata;
@@ -208,15 +225,7 @@ export class TextInputControlBase implements OnDestroy, ControlValueAccessor, Ge
         return this.input.placeholder;
     }
 
-    /**
-     * The input.name in this control
-     */
-    @Input() set name(v: string) {
-        this.input.name = v
-    }
-    get name(): string {
-        return this.input.name;
-    }
+
 
     /**
      * The input.maxLength in this control

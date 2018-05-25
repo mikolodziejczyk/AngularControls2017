@@ -6,6 +6,7 @@ export interface GeneralControl {
     isRequired: boolean;
     help: string;
     id: string;
+    name: string;
     control: FormControl;
     metadata: GeneralControlMetadata;
 }

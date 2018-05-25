@@ -40,6 +40,7 @@ import { GeneralControlMetadata } from '../controlMetadata/generalControlMetadat
   ]
 })
 export class NumberControlComponent implements ControlValueAccessor, GeneralControl, OnInit, AfterViewInit {
+  name: string;
   metadata: GeneralControlMetadata;
   
   static error_NaN: string = "notANumber";
