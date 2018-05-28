@@ -45,4 +45,8 @@ export class EditorFormRowComponent implements OnInit, AfterContentInit {
   get isString() : boolean {
     return this.metadata.type == "string";
   }
+
+  get isCheckbox() : boolean {
+    return this.metadata.type == "checkbox";
+  }
 }

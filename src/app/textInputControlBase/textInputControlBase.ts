@@ -206,7 +206,7 @@ export class TextInputControlBase implements OnDestroy, ControlValueAccessor, Ge
         this._metadata = <TextInputControlBaseMetadata>v;
 
         this.label = this._metadata.label;
-        this.isRequired = this._metadata.isRequired;
+        this.isRequired = this._metadata.isRequired || false;
         this.id = this._metadata.id || uniqueControlIdGenerator.getId();
         if (this._metadata.name !== undefined) this.name = this._metadata.name;
         this.help = this._metadata.help || null;

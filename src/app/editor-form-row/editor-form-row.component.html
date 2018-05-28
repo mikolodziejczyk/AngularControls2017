@@ -12,5 +12,9 @@
     <mko-string-control [metadata]="metadata" #editor [formControl]="boundFormControl" [control]="boundFormControl">
     </mko-string-control>
   </ng-container>
+  <ng-container *ngIf="isCheckbox">
+    <mko-checkbox-control [metadata]="metadata" #editor [formControl]="boundFormControl" [control]="boundFormControl">
+    </mko-checkbox-control>
+  </ng-container>
 
 </mko-form-row>

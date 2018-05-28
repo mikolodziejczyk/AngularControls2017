@@ -7,6 +7,7 @@ import { TextInputControlBaseMetadata } from './textInputControlBase/textInputCo
 import { DecimalControlMetadata } from './decimal-control/decimalControlMetadata';
 import { IntegerControlMetadata } from './integer-control/integerControlMetadata';
 import { StringControlMetadata } from './string-component/stringControlMetadata';
+import { CheckboxControlMetadata } from './checkbox-control/checkboxControlMetadata';
 
 @Component({
   selector: 'app-root',
@@ -33,9 +34,10 @@ export class AppComponent implements OnDestroy {
   anotherNumber: FormControl;
   startYear: FormControl;
   lastName: FormControl;
+  notifyViaMail: FormControl;
 
 
-  formMetadata: { [name: string]: GeneralControlMetadata | TextInputControlBaseMetadata | DecimalControlMetadata | IntegerControlMetadata | StringControlMetadata } = {
+  formMetadata: { [name: string]: GeneralControlMetadata | TextInputControlBaseMetadata | DecimalControlMetadata | IntegerControlMetadata | StringControlMetadata | CheckboxControlMetadata } = {
     unitPrice : {
       type: "decimal",
       id : "unitPrice_id",
@@ -65,6 +67,12 @@ export class AppComponent implements OnDestroy {
       controlSize: "medium",
       maxLength: 20,
       minLength: 2
+    },
+    notifyViaMail : {
+      type: "checkbox",
+      label: "Wyślij e-mail",
+      help: "Zaznacz aby otrzymywać powiadomienia poprzez e-mail.",
+      additionalLabel: "Powiadomienia e-mail"
     }
 
   }
@@ -80,7 +88,8 @@ export class AppComponent implements OnDestroy {
       firstName: "John",
       anotherNumber: [123],
       startYear: [2000],
-      lastName: ["Smith"]
+      lastName: ["Smith"],
+      notifyViaMail: [false]
     });
 
     this.secondNumber = <FormControl>this.myForm.controls["secondNumber"];
@@ -92,6 +101,7 @@ export class AppComponent implements OnDestroy {
     this.anotherNumber = <FormControl>this.myForm.controls["anotherNumber"];
     this.startYear = <FormControl>this.myForm.controls["startYear"];
     this.lastName = <FormControl>this.myForm.controls["lastName"];
+    this.notifyViaMail = <FormControl>this.myForm.controls["notifyViaMail"];
   }
 
 

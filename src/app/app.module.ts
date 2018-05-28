@@ -17,6 +17,7 @@ import { IntegerControlComponent } from './integer-control/integer-control.compo
 import { DecimalControlComponent } from './decimal-control/decimal-control.component';
 import { StringControlComponent } from './string-component/string-control.component';
 import { EditorFormRowComponent } from './editor-form-row/editor-form-row.component';
+import { CheckboxControlComponent } from './checkbox-control/checkbox-control.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { EditorFormRowComponent } from './editor-form-row/editor-form-row.compon
     IntegerControlComponent,
     DecimalControlComponent,
     StringControlComponent,
-    EditorFormRowComponent
+    EditorFormRowComponent,
+    CheckboxControlComponent
   ],
   imports: [
     BrowserModule,
