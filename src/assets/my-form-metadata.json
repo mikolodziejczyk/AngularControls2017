@@ -1,0 +1,40 @@
+{
+    "controls": {
+        "unitPrice": {
+            "type": "decimal",
+            "id": "unitPrice_id",
+            "name": "unitPrice_name",
+            "label": "Cena jednostkowa",
+            "isRequired": false,
+            "help": "Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>",
+            "min": 0,
+            "max": 100000,
+            "maxDecimalDigits": 2
+        },
+        "startYear": {
+            "type": "integer",
+            "label": "Rok - początek",
+            "isRequired": true,
+            "help": "Rok początkowy <b>lorem ipsum</b> with html.",
+            "placeholder": "Rok początkowy",
+            "maxLength": 4,
+            "controlSize": "medium",
+            "min": 1900,
+            "max": 2100
+        },
+        "lastName": {
+            "type": "string",
+            "label": "Nazwisko",
+            "isRequired": true,
+            "controlSize": "medium",
+            "maxLength": 20,
+            "minLength": 2
+        },
+        "notifyViaMail": {
+            "type": "checkbox",
+            "label": "Wyślij e-mail",
+            "help": "Zaznacz aby otrzymywać powiadomienia poprzez e-mail.",
+            "additionalLabel": "Powiadomienia e-mail"
+        }
+    }
+}

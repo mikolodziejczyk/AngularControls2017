@@ -1,0 +1,29 @@
+<div class="container-fluid">
+  <div class="page-header">
+    <h1>Przykładowy formularz</h1>
+  </div>
+
+  <ng-container *ngIf="formMetadata">
+
+    <form class="form-horizontal" [formGroup]="myForm" novalidate (ngSubmit)="onSubmit()">
+
+      <mko-editor-form-row [boundFormControl]="anotherNumber" [metadata]="controlMetadata['unitPrice']">
+      </mko-editor-form-row>
+      <mko-editor-form-row [boundFormControl]="startYear" [metadata]="controlMetadata['startYear']">
+      </mko-editor-form-row>
+      <mko-editor-form-row [boundFormControl]="lastName" [metadata]="controlMetadata['lastName']">
+      </mko-editor-form-row>
+      <mko-editor-form-row [boundFormControl]="notifyViaMail" [metadata]="controlMetadata['notifyViaMail']">
+      </mko-editor-form-row>
+
+      <mko-form-errors [control]="myForm"></mko-form-errors>
+
+      <mko-form-actions (save)="onSubmit();" (cancel)="onCancel();"></mko-form-actions>
+    </form>
+
+  </ng-container>
+
+  <ng-container *ngIf="!formMetadata">
+    <div>Loading...</div>
+  </ng-container>
+</div>

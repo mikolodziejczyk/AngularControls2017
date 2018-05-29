@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms'; 
+import { HttpClientModule } from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
@@ -20,6 +21,7 @@ import { EditorFormRowComponent } from './editor-form-row/editor-form-row.compon
 import { CheckboxControlComponent } from './checkbox-control/checkbox-control.component';
 import { FormActionsComponent } from './form-actions/form-actions.component';
 import { FormErrorsComponent } from './form-errors/form-errors.component';
+import { MyFormComponent } from './my-form/my-form.component';
 
 @NgModule({
   declarations: [
@@ -35,11 +37,14 @@ import { FormErrorsComponent } from './form-errors/form-errors.component';
     EditorFormRowComponent,
     CheckboxControlComponent,
     FormActionsComponent,
-    FormErrorsComponent
+    FormErrorsComponent,
+    MyFormComponent
   ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    HttpClientModule,
+    
      // Specify your library as an import
      SampleModule.forRoot()
 

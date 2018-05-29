@@ -1,12 +1,14 @@
+<app-my-form></app-my-form>
+
 <!-- The content below is only a placeholder and can be replaced.
 <h1 uniqueId>This should use a shared library</h1>
 <sample-component uniqueId></sample-component>
 <p uniqueId>This should have an unique id.</p>
 <app-my-component></app-my-component> -->
-
+<!-- 
 <div class="container-fluid">
     <form class="form-horizontal" [formGroup]="myForm" novalidate (ngSubmit)="onSubmit()">
-<!-- 
+
         <mko-form-row [generalControl]="numberComponent">
             <mko-decimal-control [id]="'secondNumber'" #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Cena jedn."
                 [isRequired]="true" min=-10 max=103320.45 maxDecimalDigits=2 controlSize="medium" help="Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>">
@@ -39,7 +41,7 @@
                 minLength=3 help="Podaj tutaj miesiąc, lorem ipsum." maxLength=20 controlSize="medium">
 
             </mko-string-control>
-        </mko-form-row> -->
+        </mko-form-row> 
 
         <mko-editor-form-row [boundFormControl]="anotherNumber" [metadata]="formMetadata['unitPrice']">
         </mko-editor-form-row>
@@ -51,7 +53,7 @@
         </mko-editor-form-row>
 
         <div class="form-group">
-            <!-- <label class="control-label col-sm-4" [for]="numberComponent.id">{{ numberComponent.label }}</label>
+           <label class="control-label col-sm-4" [for]="numberComponent.id">{{ numberComponent.label }}</label>
             <div class="col-sm-8">
                 <mko-number-control [id]="'secondNumber'" #numberComponent formControlName="secondNumber" [control]="secondNumber" label="Cena jedn." [isRequired]="true"
                     min=-10 max=103320.45 maxDecimalDigits=2></mko-number-control>
@@ -73,14 +75,14 @@
                         {{ secondNumber.errors.maxDecimalDigits }}
                     </div>
                 </div> 
-            </div> -->
+            </div> 
 
 
         </div>
 
         <mko-form-errors [control]="myForm"></mko-form-errors>
 
-        <!-- <div class="form-group">
+        <div class="form-group">
             <div class="col-sm-8 col-sm-offset-4">
                 <div class="alert alert-danger" *ngIf="myForm.errors">
                     <mko-validation-errors [control]="myForm">
@@ -88,15 +90,16 @@
 
                 </div>
             </div>
-        </div> -->
+        </div> 
 
-        <!-- <div class="row">
+        <div class="row">
             <div class="col-sm-8 col-sm-offset-4">
                 <button class="btn btn-success" type="submit">Save</button>
                 <button class="btn btn-success" type="button" id="setValue" (click)="setValue();">Set value</button>
             </div>
-        </div> -->
+        </div> 
 
         <mko-form-actions (save)="onSubmit();" (cancel)="onCancel();" ></mko-form-actions>
     </form>
 </div>
+-->
