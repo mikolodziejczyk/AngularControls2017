@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { HttpClient } from '@angular/common/http';
 import { FormMetadata, ControlsMetadata } from '../formMetadata';
+import { markFormGroupTouched } from '../formhelpers/formHelpers';
 
 
 @Component({
@@ -38,7 +39,6 @@ export class MyFormComponent implements OnInit {
 
 
   myForm: FormGroup;
-  formSubscription: Subscription;
   anotherNumber: FormControl;
   startYear: FormControl;
   lastName: FormControl;
@@ -46,6 +46,10 @@ export class MyFormComponent implements OnInit {
 
   formMetadata: FormMetadata;
   controlMetadata: ControlsMetadata;
+
+  formSubscription: Subscription;
+  isSaving: boolean = false;
+  isCancelling: boolean = false;
 
   createForm() {
     this.myForm = this.fb.group({
@@ -69,18 +73,13 @@ export class MyFormComponent implements OnInit {
 
   onSubmit = () => {
     console.log(`onSubmit() called.`);
-    this.markFormGroupTouched(this.myForm);
+    markFormGroupTouched(this.myForm);
     this.myForm.updateValueAndValidity();
 
-    if (this.notifyViaMail.value) {
-      this.myForm.setErrors({
-        insufficient: "Wartość jest niewystarczająca.",
-        unique_xxx: "Podane wartości są bez sensu!."
-      });
-    }
+
 
     if (this.myForm.valid) {
-      console.log(`Form value: ${JSON.stringify(this.myForm.value)}`);
+      this.save();
     }
     else {
       console.log(`Form invalid, submit cancelled.`);
@@ -89,28 +88,30 @@ export class MyFormComponent implements OnInit {
   }
 
   onCancel = () => {
+    this.isCancelling = true;
+    window.setTimeout( () => {
     alert("Cancel called.");
+    this.isCancelling = false;
+    }, 2000);
   }
 
+  save = async () => {
+    this.isSaving = true;
+    window.setTimeout( () => {
+      this.isSaving = false;
 
-  /**
- * Marks all controls in a form group as touched
- * @param formGroup The group to process.
- */
-  private markFormGroupTouched(formGroup: FormGroup) {
-
-    formGroup.markAsTouched(); // mark the FormGroup itself as touched
-
-    Object.keys(formGroup.controls).map(x => formGroup.controls[x]).forEach(control => {
-      control.markAsTouched();
-
-      // process nested FormGroups, recursively -- this part is not tested
-      if ((<FormGroup>control).controls) {
-        let nestedFg = (<FormGroup>control);
-        Object.keys(nestedFg.controls).map(x => nestedFg.controls[x]).forEach(c => this.markFormGroupTouched(nestedFg));
+      console.log(`Form value: ${JSON.stringify(this.myForm.value)}`);
+      if (this.notifyViaMail.value) {
+        this.myForm.setErrors({
+          insufficient: "Wartość jest niewystarczająca.",
+          unique_xxx: "Podane wartości są bez sensu!."
+        });
       }
-    });
+    }, 2000);
   }
+
+
+
 
 
 

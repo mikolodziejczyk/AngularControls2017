@@ -1,6 +1,8 @@
 <div class="row -mko-form-actions">
   <div class="{{ columnClass }}">
-    <button type="button" class="-mko-save-button btn btn-primary btn-lg" (click)="save.emit();">{{saveText}}</button>
-    <button type="button" class="-mko-cancel-button btn btn-default btn-lg" (click)="cancel.emit();">{{cancelText}}</button>
+    <button type="button" class="-mko-save-button btn btn-primary btn-lg" (click)="save.emit();" [disabled]="isSaving || isCancelling">
+      <span class="spinner"><i *ngIf="isSaving" class="fas fa-spinner fa-pulse"></i></span>{{saveText}}</button>
+    <button type="button" class="-mko-cancel-button btn btn-default btn-lg" (click)="cancel.emit();" [disabled]="isSaving || isCancelling">
+        <span class="spinner"><i *ngIf="isCancelling" class="fas fa-spinner fa-pulse"></i></span>{{cancelText}}</button>
   </div>
 </div>

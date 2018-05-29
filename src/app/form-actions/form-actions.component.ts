@@ -18,6 +18,9 @@ export class FormActionsComponent implements OnInit {
   @Input() saveText: string = "Zapisz";
   @Input() cancelText: string = "Anuluj"
 
+  @Input() isSaving: boolean = false;
+  @Input() isCancelling: boolean = false;
+
   @Output() save: EventEmitter<void> = new EventEmitter<void>();
   @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
 }

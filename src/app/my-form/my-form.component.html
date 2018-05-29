@@ -18,7 +18,7 @@
 
       <mko-form-errors [control]="myForm"></mko-form-errors>
 
-      <mko-form-actions (save)="onSubmit();" (cancel)="onCancel();"></mko-form-actions>
+      <mko-form-actions (save)="onSubmit();" (cancel)="onCancel();" [isSaving]="isSaving" [isCancelling]="isCancelling"></mko-form-actions>
     </form>
 
   </ng-container>
