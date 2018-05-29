@@ -88,11 +88,13 @@
             </div>
         </div>
 
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-sm-8 col-sm-offset-4">
                 <button class="btn btn-success" type="submit">Save</button>
                 <button class="btn btn-success" type="button" id="setValue" (click)="setValue();">Set value</button>
             </div>
-        </div>
+        </div> -->
+
+        <mko-form-actions (save)="onSubmit();" (cancel)="onCancel();" ></mko-form-actions>
     </form>
 </div>

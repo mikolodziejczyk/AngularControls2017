@@ -122,6 +122,10 @@ export class AppComponent implements OnDestroy {
 
   }
 
+  onCancel = () => {
+    alert("Cancel called.");
+  }
+
   setValue = () => {
     // this.numberControlComponent.min++;
     // console.log(`Increased min to: ${this.numberControlComponent.min}`);

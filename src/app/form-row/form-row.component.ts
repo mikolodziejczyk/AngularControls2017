@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { GeneralControl } from '../generalControl/generalControl';
+import { BootstrapHtmlHelpers } from '../bootstrapHtmlHelpers';
 // import  "@types/jquery"
 // import  "@types/bootstrap"
 // /// <reference types="jquery"/>
@@ -96,4 +97,7 @@ export class FormRowComponent implements OnInit, AfterViewInit {
       this._currentPopoverHelp = this.help;
     }
   }
+
+  public labelClass : string = BootstrapHtmlHelpers.editLabelClass;
+  public valueClass : string = BootstrapHtmlHelpers.editValueClass;
 }
