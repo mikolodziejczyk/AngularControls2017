@@ -1,14 +1,9 @@
 import { Component, OnDestroy, ViewChild, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
-import { NumberControlComponent } from '../number-control/number-control.component';
-import { GeneralControlMetadata } from '../generalControl/generalControlMetadata';
-import { TextInputControlBaseMetadata } from '../textInputControlBase/textInputControlBaseMetadata';
-import { DecimalControlMetadata } from '../decimal-control/decimalControlMetadata';
-import { IntegerControlMetadata } from '../integer-control/integerControlMetadata';
-import { StringControlMetadata } from '../string-component/stringControlMetadata';
-import { CheckboxControlMetadata } from '../checkbox-control/checkboxControlMetadata';
+
 import { HttpClient } from '@angular/common/http';
+import { FormMetadata, ControlsMetadata } from '../formMetadata';
 
 
 @Component({
@@ -19,29 +14,28 @@ import { HttpClient } from '@angular/common/http';
 export class MyFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
-    this.createForm();
-    this.formSubscription = this.myForm.valueChanges.subscribe((v) => console.log(`Form value ${JSON.stringify(v)}`));
-    this.loadData();
+
+    this.loadMetadata();
   }
 
   ngOnInit() {
   }
 
-  async loadData() {
+  async loadMetadata() {
     try {
-      let o = this.http.get<any>("assets/my-form-metadata.json");
-      this.formMetadata  = await o.toPromise();
+      let o = this.http.get<FormMetadata>("assets/my-form-metadata.json");
+      this.formMetadata = await o.toPromise();
       this.controlMetadata = this.formMetadata.controls;
       console.log("Metadata loaded");
 
+      this.createForm();
+      this.formSubscription = this.myForm.valueChanges.subscribe((v) => console.log(`Form value ${JSON.stringify(v)}`));
     }
     catch (ex) {
       console.log("Error " + ex);
     }
   }
-  
 
-  @ViewChild("numberComponent") numberControlComponent: NumberControlComponent;
 
   myForm: FormGroup;
   formSubscription: Subscription;
@@ -50,46 +44,8 @@ export class MyFormComponent implements OnInit {
   lastName: FormControl;
   notifyViaMail: FormControl;
 
-  formMetadata: any;
-  controlMetadata: { [name: string]: GeneralControlMetadata | TextInputControlBaseMetadata | DecimalControlMetadata | IntegerControlMetadata | StringControlMetadata | CheckboxControlMetadata } = {
-    unitPrice: {
-      type: "decimal",
-      id: "unitPrice_id",
-      name: "unitPrice_name",
-      label: "Cena jednostkowa",
-      isRequired: false,
-      help: "Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>",
-      min: 0,
-      max: 100000,
-      maxDecimalDigits: 2
-    },
-    startYear: {
-      type: "integer",
-      label: "Rok - początek",
-      isRequired: true,
-      help: "Rok początkowy <b>lorem ipsum</b> with html.",
-      placeholder: "Rok początkowy",
-      maxLength: 4,
-      controlSize: "medium",
-      min: 1900,
-      max: 2100
-    },
-    lastName: {
-      type: "string",
-      label: "Nazwisko",
-      isRequired: true,
-      controlSize: "medium",
-      maxLength: 20,
-      minLength: 2
-    },
-    notifyViaMail: {
-      type: "checkbox",
-      label: "Wyślij e-mail",
-      help: "Zaznacz aby otrzymywać powiadomienia poprzez e-mail.",
-      additionalLabel: "Powiadomienia e-mail"
-    }
-
-  }
+  formMetadata: FormMetadata;
+  controlMetadata: ControlsMetadata;
 
   createForm() {
     this.myForm = this.fb.group({
