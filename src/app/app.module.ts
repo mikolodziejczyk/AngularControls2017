@@ -22,6 +22,7 @@ import { CheckboxControlComponent } from './checkbox-control/checkbox-control.co
 import { FormActionsComponent } from './form-actions/form-actions.component';
 import { FormErrorsComponent } from './form-errors/form-errors.component';
 import { MyFormComponent } from './my-form/my-form.component';
+import { OverlayComponent } from './overlay/overlay.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { MyFormComponent } from './my-form/my-form.component';
     CheckboxControlComponent,
     FormActionsComponent,
     FormErrorsComponent,
-    MyFormComponent
+    MyFormComponent,
+    OverlayComponent
   ],
   imports: [
     BrowserModule,
