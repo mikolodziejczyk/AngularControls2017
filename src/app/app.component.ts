@@ -38,20 +38,20 @@ export class AppComponent implements OnDestroy {
 
 
   formMetadata: { [name: string]: GeneralControlMetadata | TextInputControlBaseMetadata | DecimalControlMetadata | IntegerControlMetadata | StringControlMetadata | CheckboxControlMetadata } = {
-    unitPrice : {
+    unitPrice: {
       type: "decimal",
-      id : "unitPrice_id",
+      id: "unitPrice_id",
       name: "unitPrice_name",
-      label : "Cena jednostkowa",
+      label: "Cena jednostkowa",
       isRequired: false,
       help: "Cena jednostkowa za towar bez uwzględnienia rabatów. Szczegóły <small><a href='http://global-solutions.pl'>Pomoc 21342</a></small>",
       min: 0,
       max: 100000,
       maxDecimalDigits: 2
     },
-    startYear : {
+    startYear: {
       type: "integer",
-      label : "Rok - początek",
+      label: "Rok - początek",
       isRequired: true,
       help: "Rok początkowy <b>lorem ipsum</b> with html.",
       placeholder: "Rok początkowy",
@@ -60,15 +60,15 @@ export class AppComponent implements OnDestroy {
       min: 1900,
       max: 2100
     },
-    lastName : {
+    lastName: {
       type: "string",
-      label : "Nazwisko",
+      label: "Nazwisko",
       isRequired: true,
       controlSize: "medium",
       maxLength: 20,
       minLength: 2
     },
-    notifyViaMail : {
+    notifyViaMail: {
       type: "checkbox",
       label: "Wyślij e-mail",
       help: "Zaznacz aby otrzymywać powiadomienia poprzez e-mail.",
@@ -113,6 +113,14 @@ export class AppComponent implements OnDestroy {
     console.log(`onSubmit() called.`);
     this.markFormGroupTouched(this.myForm);
     this.myForm.updateValueAndValidity();
+
+    if (this.notifyViaMail.value) {
+      this.myForm.setErrors({
+        insufficient: "Wartość jest niewystarczająca.",
+        unique_xxx: "Podane wartości są bez sensu!."
+      });
+    }
+
     if (this.myForm.valid) {
       console.log(`Form value: ${JSON.stringify(this.myForm.value)}`);
     }
@@ -135,7 +143,7 @@ export class AppComponent implements OnDestroy {
     this.myForm.setErrors({
       insufficient: "Wartość jest niewystarczająca.", unique_xxx: "Podane wartości są bez sensu!."
     });
-    
+
     this.markFormGroupTouched(this.myForm);
   }
 

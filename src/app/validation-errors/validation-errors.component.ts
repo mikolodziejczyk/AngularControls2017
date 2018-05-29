@@ -48,6 +48,12 @@ export class ValidationErrorsComponent implements OnInit {
    */
   @Input() id: string;
 
+
+  /**
+   * Use regular font instead of small one.
+   */
+  @Input() largeMessage: boolean = false;
+
   /**
    * Returns an array of error messages (strings) for the current control.errors
    */

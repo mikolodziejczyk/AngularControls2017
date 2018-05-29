@@ -19,6 +19,7 @@ import { StringControlComponent } from './string-component/string-control.compon
 import { EditorFormRowComponent } from './editor-form-row/editor-form-row.component';
 import { CheckboxControlComponent } from './checkbox-control/checkbox-control.component';
 import { FormActionsComponent } from './form-actions/form-actions.component';
+import { FormErrorsComponent } from './form-errors/form-errors.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { FormActionsComponent } from './form-actions/form-actions.component';
     StringControlComponent,
     EditorFormRowComponent,
     CheckboxControlComponent,
-    FormActionsComponent
+    FormActionsComponent,
+    FormErrorsComponent
   ],
   imports: [
     BrowserModule,
