@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-overlay',
+  selector: 'mko-overlay',
   templateUrl: './overlay.component.html',
-  styleUrls: ['./overlay.component.css']
+  styleUrls: ['./overlay.component.less']
 })
 export class OverlayComponent implements OnInit {
 
@@ -11,5 +11,7 @@ export class OverlayComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  @Input() active: boolean = false;
 
 }

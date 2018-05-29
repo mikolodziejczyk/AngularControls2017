@@ -107,7 +107,7 @@ export class MyFormComponent implements OnInit {
           unique_xxx: "Podane wartości są bez sensu!."
         });
       }
-    }, 2000);
+    }, 4000);
   }
 
 
