@@ -1,10 +1,14 @@
 import { Component, OnDestroy, ViewChild, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators, ValidationErrors } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 
 import { HttpClient } from '@angular/common/http';
 import { FormMetadata, ControlsMetadata } from '../formMetadata';
 import { markFormGroupTouched } from '../formhelpers/formHelpers';
+import { MyFormSaveServiceService } from './my-form-save-service.service';
+import { FormSaveReply } from '../formSaveReply';
+import { errorsToErrorObject } from '../formhelpers/errorsToErrorObject';
+import { MyFormData } from './my-form-data';
 
 
 @Component({
@@ -14,7 +18,7 @@ import { markFormGroupTouched } from '../formhelpers/formHelpers';
 })
 export class MyFormComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private saveService: MyFormSaveServiceService) {
 
     this.loadMetadata();
   }
@@ -30,7 +34,7 @@ export class MyFormComponent implements OnInit {
       console.log("Metadata loaded");
 
       this.createForm();
-      this.formSubscription = this.myForm.valueChanges.subscribe((v) => console.log(`Form value ${JSON.stringify(v)}`));
+      
     }
     catch (ex) {
       console.log("Error " + ex);
@@ -47,11 +51,10 @@ export class MyFormComponent implements OnInit {
   formMetadata: FormMetadata;
   controlMetadata: ControlsMetadata;
 
-  formSubscription: Subscription;
   isSaving: boolean = false;
   isCancelling: boolean = false;
-  isError: boolean = false;
-  errorMessage: string;
+  isFailure: boolean = false;
+  failureMessage: string;
 
   createForm() {
     this.myForm = this.fb.group({
@@ -70,22 +73,41 @@ export class MyFormComponent implements OnInit {
 
 
   ngOnDestroy(): void {
-    this.formSubscription.unsubscribe();
+ 
   }
 
-  onSubmit = () => {
+  onSubmit = async () => {
     console.log(`onSubmit() called.`);
     markFormGroupTouched(this.myForm);
     this.myForm.updateValueAndValidity();
 
 
 
-    if (this.myForm.valid) {
-      this.save();
-    }
-    else {
+    if (!this.myForm.valid) {
       console.log(`Form invalid, submit cancelled.`);
+      return;
     }
+
+    this.isSaving = true;
+
+    // convert form value into the format suitable for submitting, here no changes are neccessary.
+    let formData : MyFormData = this.myForm.value;
+
+    let r: FormSaveReply = await this.saveService.save(this.myForm.value);
+    this.isSaving = false;
+
+
+    if (r.isSuccess) {
+      window.location.href = this.formMetadata.navigation.okUrl;
+    } else if (r.isError) {
+
+      let errors: ValidationErrors = errorsToErrorObject(r.errors);
+      this.myForm.setErrors(errors);
+    } else if (r.isFailure) {
+      this.failureMessage = r.failureMessage || "Nie udało sie zapisać zmian. Spróbuj ponownie.";
+    }
+
+
 
   }
 
@@ -96,34 +118,7 @@ export class MyFormComponent implements OnInit {
     }, 2000);
   }
 
-  save = async () => {
-    this.isSaving = true;
-    window.setTimeout(() => {
 
-
-      console.log(`Form value: ${JSON.stringify(this.myForm.value)}`);
-
-      if (this.lastName.value == "Error") {
-        this.isSaving = false;
-        this.errorMessage = "Nie udało sie zapisać zmian. Spróbuj ponownie.";
-        this.isError = true;
-      }
-      else {
-        if (this.notifyViaMail.value) {
-          this.isSaving = false;
-          this.myForm.setErrors({
-            insufficient: "Wartość jest niewystarczająca.",
-            unique_xxx: "Podane wartości są bez sensu!."
-          });
-        }
-        else {
-          window.location.href = this.formMetadata.navigation.okUrl;
-        }
-      }
-
-
-    }, 4000);
-  }
 
 
 

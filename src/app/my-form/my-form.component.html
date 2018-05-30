@@ -27,6 +27,6 @@
     <div>Loading...</div>
   </ng-container>
 
-  <mko-operation-failed [active]="isError" [bodyHtml]="errorMessage" [backLinkUrl]="formMetadata?.navigation.cancelUrl"></mko-operation-failed>
+  <mko-operation-failed [active]="isFailure" [bodyHtml]="failureMessage" [backLinkUrl]="formMetadata?.navigation.cancelUrl"></mko-operation-failed>
 </div>
 <mko-overlay [active]="isSaving || isCancelling"></mko-overlay>
