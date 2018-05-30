@@ -36,5 +36,9 @@
             "help": "Zaznacz aby otrzymywać powiadomienia poprzez e-mail.",
             "additionalLabel": "Powiadomienia e-mail"
         }
+    },
+    "navigation": {
+        "cancelUrl": "/assets/cancelled.html",
+        "okUrl": "/assets/done.html"
     }
 }

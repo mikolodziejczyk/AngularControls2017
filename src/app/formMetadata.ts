@@ -11,4 +11,10 @@ export type ControlsMetadata = { [name: string]: AnyControlMetadata }
 
 export interface FormMetadata {
     controls: ControlsMetadata;
+    navigation: Navigation;
+}
+
+export interface Navigation {
+    okUrl?: string;
+    cancelUrl?: string;
 }

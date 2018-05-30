@@ -23,6 +23,7 @@ import { FormActionsComponent } from './form-actions/form-actions.component';
 import { FormErrorsComponent } from './form-errors/form-errors.component';
 import { MyFormComponent } from './my-form/my-form.component';
 import { OverlayComponent } from './overlay/overlay.component';
+import { OperationFailedComponent } from './operation-failed/operation-failed.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { OverlayComponent } from './overlay/overlay.component';
     FormActionsComponent,
     FormErrorsComponent,
     MyFormComponent,
-    OverlayComponent
+    OverlayComponent,
+    OperationFailedComponent
   ],
   imports: [
     BrowserModule,

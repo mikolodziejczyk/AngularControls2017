@@ -3,7 +3,7 @@
     <h1>Przykładowy formularz</h1>
   </div>
 
-  <ng-container *ngIf="formMetadata">
+  <ng-container *ngIf="formMetadata && !isError">
 
     <form class="form-horizontal" [formGroup]="myForm" novalidate (ngSubmit)="onSubmit()">
 
@@ -26,5 +26,7 @@
   <ng-container *ngIf="!formMetadata">
     <div>Loading...</div>
   </ng-container>
+
+  <mko-operation-failed [active]="isError" [bodyHtml]="errorMessage" [backLinkUrl]="formMetadata?.navigation.cancelUrl"></mko-operation-failed>
 </div>
 <mko-overlay [active]="isSaving || isCancelling"></mko-overlay>

@@ -1,0 +1,12 @@
+<div class="row" *ngIf="active">
+  <div class="col-sm-offset-1 col-sm-10">
+      <h2>{{ title }}</h2>
+      <div class="alert alert-danger" role="alert">
+          <p class="-mko-operationFailedBodyText" [innerHTML]="body">
+          </p>
+          <p class="-mko-operationFailedBackLink">
+              <a [href]="backLinkUrl" class="alert-link">{{ backLinkName }}</a>
+          </p>
+      </div>
+  </div>
+</div>

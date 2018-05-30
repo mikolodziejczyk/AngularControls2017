@@ -50,6 +50,8 @@ export class MyFormComponent implements OnInit {
   formSubscription: Subscription;
   isSaving: boolean = false;
   isCancelling: boolean = false;
+  isError: boolean = false;
+  errorMessage: string;
 
   createForm() {
     this.myForm = this.fb.group({
@@ -89,24 +91,37 @@ export class MyFormComponent implements OnInit {
 
   onCancel = () => {
     this.isCancelling = true;
-    window.setTimeout( () => {
-    alert("Cancel called.");
-    this.isCancelling = false;
+    window.setTimeout(() => {
+      window.location.href = this.formMetadata.navigation.cancelUrl;
     }, 2000);
   }
 
   save = async () => {
     this.isSaving = true;
-    window.setTimeout( () => {
-      this.isSaving = false;
+    window.setTimeout(() => {
+
 
       console.log(`Form value: ${JSON.stringify(this.myForm.value)}`);
-      if (this.notifyViaMail.value) {
-        this.myForm.setErrors({
-          insufficient: "Wartość jest niewystarczająca.",
-          unique_xxx: "Podane wartości są bez sensu!."
-        });
+
+      if (this.lastName.value == "Error") {
+        this.isSaving = false;
+        this.errorMessage = "Nie udało sie zapisać zmian. Spróbuj ponownie.";
+        this.isError = true;
       }
+      else {
+        if (this.notifyViaMail.value) {
+          this.isSaving = false;
+          this.myForm.setErrors({
+            insufficient: "Wartość jest niewystarczająca.",
+            unique_xxx: "Podane wartości są bez sensu!."
+          });
+        }
+        else {
+          window.location.href = this.formMetadata.navigation.okUrl;
+        }
+      }
+
+
     }, 4000);
   }
 
