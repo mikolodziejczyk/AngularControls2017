@@ -3,7 +3,7 @@ import { FormSaveReply } from '../formSaveReply';
 import { MyFormData } from './my-form-data';
 
 @Injectable()
-export class MyFormSaveServiceService {
+export class MyFormSaveService {
 
   constructor() { }
 

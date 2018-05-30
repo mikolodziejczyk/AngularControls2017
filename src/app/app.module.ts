@@ -24,7 +24,8 @@ import { FormErrorsComponent } from './form-errors/form-errors.component';
 import { MyFormComponent } from './my-form/my-form.component';
 import { OverlayComponent } from './overlay/overlay.component';
 import { OperationFailedComponent } from './operation-failed/operation-failed.component';
-import { MyFormSaveServiceService } from './my-form/my-form-save-service.service';
+import { FormMetadataService } from './form-metadata.service';
+import { MyFormSaveService } from './my-form/my-form-save.service';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,7 @@ import { MyFormSaveServiceService } from './my-form/my-form-save-service.service
 
   ],
   entryComponents: [AnotherComponentComponent],
-  providers: [ ErrorMessageFormatter, MyFormSaveServiceService ],
+  providers: [ ErrorMessageFormatter, MyFormSaveService, FormMetadataService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

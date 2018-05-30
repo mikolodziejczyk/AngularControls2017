@@ -5,10 +5,11 @@ import { Subscription } from 'rxjs/Subscription';
 import { HttpClient } from '@angular/common/http';
 import { FormMetadata, ControlsMetadata } from '../formMetadata';
 import { markFormGroupTouched } from '../formhelpers/formHelpers';
-import { MyFormSaveServiceService } from './my-form-save-service.service';
 import { FormSaveReply } from '../formSaveReply';
 import { errorsToErrorObject } from '../formhelpers/errorsToErrorObject';
 import { MyFormData } from './my-form-data';
+import { FormMetadataService } from '../form-metadata.service';
+import { MyFormSaveService } from './my-form-save.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ import { MyFormData } from './my-form-data';
 })
 export class MyFormComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private saveService: MyFormSaveServiceService) {
+  constructor(private fb: FormBuilder, private metadataService: FormMetadataService, private saveService: MyFormSaveService) {
 
     this.loadMetadata();
   }
@@ -27,18 +28,9 @@ export class MyFormComponent implements OnInit {
   }
 
   async loadMetadata() {
-    try {
-      let o = this.http.get<FormMetadata>("assets/my-form-metadata.json");
-      this.formMetadata = await o.toPromise();
-      this.controlMetadata = this.formMetadata.controls;
-      console.log("Metadata loaded");
-
-      this.createForm();
-      
-    }
-    catch (ex) {
-      console.log("Error " + ex);
-    }
+    this.formMetadata = await this.metadataService.getMetadata("assets/my-form-metadata.json");
+    this.controlMetadata = this.formMetadata.controls;
+    this.createForm();
   }
 
 
@@ -73,7 +65,7 @@ export class MyFormComponent implements OnInit {
 
 
   ngOnDestroy(): void {
- 
+
   }
 
   onSubmit = async () => {
@@ -91,7 +83,7 @@ export class MyFormComponent implements OnInit {
     this.isSaving = true;
 
     // convert form value into the format suitable for submitting, here no changes are neccessary.
-    let formData : MyFormData = this.myForm.value;
+    let formData: MyFormData = this.myForm.value;
 
     let r: FormSaveReply = await this.saveService.save(this.myForm.value);
     this.isSaving = false;
@@ -113,9 +105,7 @@ export class MyFormComponent implements OnInit {
 
   onCancel = () => {
     this.isCancelling = true;
-    window.setTimeout(() => {
-      window.location.href = this.formMetadata.navigation.cancelUrl;
-    }, 2000);
+    window.location.href = this.formMetadata.navigation.cancelUrl;
   }
 
 
