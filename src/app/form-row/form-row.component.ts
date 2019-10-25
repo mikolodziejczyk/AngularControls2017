@@ -16,7 +16,7 @@ export class FormRowComponent implements OnInit, AfterViewInit {
 
   constructor() { }
 
-  @ViewChild('helpIcon')
+  @ViewChild('helpIcon', {static: false})
   private helpIcon: ElementRef;
 
 

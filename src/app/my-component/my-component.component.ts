@@ -11,9 +11,9 @@ export class MyComponentComponent implements OnInit, AfterViewInit {
   constructor(private hostElement: ElementRef, private hostViewContainerRef: ViewContainerRef, private componentFactoryResolver: ComponentFactoryResolver) {
   }
 
-  @ViewChild("container", { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
-  @ViewChild("container2", { read: ViewContainerRef }) viewContainerRef2: ViewContainerRef;
-  @ViewChild("template") template: TemplateRef<any>;
+  @ViewChild("container", { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+  @ViewChild("container2", { read: ViewContainerRef, static: false }) viewContainerRef2: ViewContainerRef;
+  @ViewChild("template", {static: false}) template: TemplateRef<any>;
 
   ngOnInit() {
 

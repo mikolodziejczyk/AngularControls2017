@@ -52,7 +52,7 @@ export class NumberControlComponent implements ControlValueAccessor, GeneralCont
 
   @Input() control: FormControl;
 
-  @ViewChild("input") input: ElementRef;
+  @ViewChild("input", {static: false}) input: ElementRef;
 
 
   ngOnInit() {

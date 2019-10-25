@@ -21,7 +21,7 @@ export class AppComponent implements OnDestroy {
     this.formSubscription = this.myForm.valueChanges.subscribe((v) => console.log(`Form value ${JSON.stringify(v)}`));
   }
 
-  @ViewChild("numberComponent") numberControlComponent: NumberControlComponent;
+  @ViewChild("numberComponent", {static: false}) numberControlComponent: NumberControlComponent;
 
   myForm: FormGroup;
   formSubscription: Subscription;

@@ -23,7 +23,7 @@ export class CheckboxControlComponent implements OnInit, AfterContentInit, OnDes
   /**
    * The actual input element.
    */
-  @ViewChild("checkbox")
+  @ViewChild("checkbox", {static: false})
   private _inputWrapper: ElementRef;
 
   private get input(): HTMLInputElement{

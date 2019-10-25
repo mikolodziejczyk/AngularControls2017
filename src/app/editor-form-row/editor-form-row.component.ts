@@ -28,9 +28,9 @@ export class EditorFormRowComponent implements OnInit, AfterContentInit {
     }, 0);
   }
 
-  @ViewChild("editor") editor: GeneralControl;
+  @ViewChild("editor", {static: false}) editor: GeneralControl;
 
-  @ViewChild("formRow") formRow: FormRowComponent;
+  @ViewChild("formRow", {static: false}) formRow: FormRowComponent;
 
   @Input() public boundFormControl: FormControl;
 

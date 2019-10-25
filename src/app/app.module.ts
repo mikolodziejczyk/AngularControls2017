@@ -7,7 +7,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 
 // Import your library
-import { SampleModule } from 'third-lib';
 import { MyComponentComponent } from './my-component/my-component.component';
 import { AnotherComponentComponent } from './another-component/another-component.component';
 import { NumberControlComponent } from './number-control/number-control.component';
@@ -52,7 +51,7 @@ import { MyFormSaveService } from './my-form/my-form-save.service';
     HttpClientModule,
     
      // Specify your library as an import
-     SampleModule.forRoot()
+     // SampleModule.forRoot()
 
   ],
   entryComponents: [AnotherComponentComponent],
